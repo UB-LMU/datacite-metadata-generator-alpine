@@ -1,0 +1,36 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: DataCite Metadata Generator
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Laura
+    family-names: Meier
+    affiliation: Ludwig-Maximilians-Universität München
+    orcid: 'https://orcid.org/0000-0003-1368-2306'
+  - given-names: Caroline
+    family-names: Strolz
+    affiliation: Ludwig-Maximilians-Universität München
+repository-code: 'https://github.com/UB-LMU/datacite-metadata-generator-alpine'
+url: >-
+  https://www.datacite-metadatengenerator.gwi.uni-muenchen.de/
+abstract: >-
+  A lightweight, browser-based tool for creating,
+  validating, importing, and exporting DataCite-compliant
+  metadata in XML, JSON, and YAML formats. The application
+  runs entirely client-side, requires no backend and is
+  ideal for researchers, research institutions,
+  repositories, libraries and anyone who wants to generate
+  or edit DataCite-compliant metadata.
+keywords:
+  - DataCite
+  - Metadata
+  - Persistent identifiers
+  - Metadata quality
+license: MIT
+version: 1.0.0
+date-released: '2026-07-10'

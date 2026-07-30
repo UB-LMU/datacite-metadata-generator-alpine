@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* General buttons */
+.btn {
+    @apply bg-slate-900 text-white px-4 py-1.5 rounded-md inline-flex items-center gap-1;
+}
+
+a.btn {
+    cursor: pointer;
+}
+
+.btn-help {
+    @apply bg-slate-900 text-white px-4 py-1.5 rounded-md inline-flex items-center gap-1;
+}
+
+/* Less prominent destructive action button */
+.btn-clear {
+    @apply bg-white text-slate-700 border border-slate-300 hover:bg-slate-100;
+}
+
+/* Secondary destructive action used for Remove buttons */
+.btn-remove {
+    @apply bg-white text-slate-700 border border-slate-900 hover:bg-slate-100;
+}
+
+/* input fields */
+.input {
+    @apply border border-gray-300 rounded-md px-2 py-1 w-full
+         focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/* error messages */
+.error {
+    @apply text-red-600 text-sm mt-1 px-1;
+}
+
+/* Labels */
+.label {
+    @apply font-semibold block mb-1;
+}
+
+/* Preview boxes (XML/JSON) */
+.preview {
+    @apply bg-slate-900 text-slate-100 p-3 rounded-md overflow-y-auto overflow-x-auto w-full max-w-full;
+    min-height: 18rem;
+}
+
+/* Flex container for button groups */
+.btn-group {
+    @apply flex flex-wrap gap-2 items-center;
+}
+
+.entity-card {
+    @apply rounded-lg border-2 border-slate-300 bg-slate-50/40 p-3 mb-4;
+}
+
+hr {
+    @apply border-0 border-t-2 border-slate-900;
+}
+
+/* Card Layout for Reference Page*/
+.card {
+    @apply rounded-xl border border-gray-200 bg-gray-50 p-5;
+}
+
+.card-title {
+    @apply text-lg font-semibold;
+}
+
+.section-title {
+    @apply text-base font-semibold;
+}
+
+.link {
+    @apply underline decoration-slate-400 underline-offset-2 hover:decoration-slate-900;
+}
+
+.text-body {
+    @apply text-sm leading-6 text-gray-700;
+}
+
+.mandatory-highlight {
+    @apply ring-2 ring-amber-500 ring-offset-2 bg-amber-50;
+    transition: all 0.25s ease;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* Tablet-only touch comfort tuning without changing desktop look */
+@media (min-width: 768px) and (max-width: 1279px) {
+    .btn {
+        @apply py-2 px-4;
+        min-height: 2.5rem;
+    }
+
+    .input {
+        @apply py-1.5;
+        min-height: 2.5rem;
+    }
+
+    .tab-strip > button {
+        @apply px-1 py-1;
+        min-height: 2.5rem;
+    }
+
+    .btn-group {
+        @apply gap-3;
+    }
+}
