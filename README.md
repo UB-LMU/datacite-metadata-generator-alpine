@@ -1,6 +1,7 @@
 # DataCite Metadata Generator
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21793363.svg)](https://doi.org/10.5281/zenodo.21793363)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21793364.svg)](https://doi.org/10.5281/zenodo.21793363)
 
 A lightweight, browser-based tool for creating, validating, importing, and exporting DataCite-compliant metadata in XML, JSON, and YAML formats.
 The application runs entirely client-side, requires no backend and is ideal for researchers, research institutions, repositories, libraries
