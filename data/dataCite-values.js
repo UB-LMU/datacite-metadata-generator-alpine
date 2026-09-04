@@ -2,7 +2,7 @@
  * @file dataCite-values.js
  * @description Controlled-vocabulary lists used throughout the DataCite
  * Metadata Generator. All values correspond to the DataCite Metadata Schema
- * Kernel 4.6 specification.
+ * Kernel 4.7 specification.
  *
  * Each exported constant is an array of option objects with at minimum
  * a `value` property (the schema value) and, where applicable, a `label`
@@ -107,7 +107,9 @@ export const resourceTypeGeneralList = [
     { value: "OutputManagementPlan", label: "Output Management Plan" },
     { value: "PeerReview", label: "Peer Review" },
     { value: "PhysicalObject", label: "Physical Object" },
+    { value: "Poster", label: "Poster" },
     { value: "Preprint", label: "Preprint" },
+    { value: "Presentation", label: "Presentation" },
     { value: "Project", label: "Project" },
     { value: "Report", label: "Report" },
     { value: "Service", label: "Service" },
@@ -129,7 +131,7 @@ export const subjectSchemes = [
     {
         value: "GND",
         label: "Gemeinsame Normdatei (GND)",
-        uri: "https://explore.gnd.network/gnd/",
+        uri: "http://d-nb.info/gnd/",
     },
     {
         value: "Wikidata",
@@ -180,7 +182,9 @@ export const relatedIdentifierTypes = [
     { value: "LSID" },
     { value: "PMID" },
     { value: "PURL" },
+    { value: "RAiD" },
     { value: "RRID" },
+    { value: "SWHID" },
     { value: "UPC" },
     { value: "URL" },
     { value: "URN" },
@@ -226,6 +230,7 @@ export const relationTypes = [
     { value: "Collects", label: "Collects" },
     { value: "IsTranslationOf", label: "Is Translation Of" },
     { value: "HasTranslation", label: "Has Translation" },
+    { value: "Other", label: "Other" },
 ];
 
 export const contributorTypes = [

@@ -9,8 +9,8 @@
  * Usage:
  *   node generate-notices.js
  *
- * Requires: license-checker-rseidelsohn
- *   npm install --save-dev license-checker-rseidelsohn
+ * Requires: @lizenz/checker
+ *   npm install --save-dev @lizenz/checker
  *
  * Flags:
  *   --prod-only   Only include production dependencies (default: all)
@@ -19,11 +19,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import { createRequire } from 'module';
-
-// license-checker-rseidelsohn is still published as CommonJS,
-// so we bridge it into this ES module via createRequire.
-const require = createRequire(import.meta.url);
 
 // ---- Config -----------------------------------------------------------
 
@@ -38,16 +33,20 @@ const outPath = outArg
 // (Not exhaustive — always double check anything unfamiliar.)
 const FLAG_PATTERNS = [/GPL/i, /AGPL/i, /LGPL/i, /CC-BY-SA/i, /EUPL/i, /MPL/i];
 
-// ---- Ensure license-checker-rseidelsohn is available -------------------
+// ---- Ensure @lizenz/checker is available --------------------------------
 
-function ensureLicenseChecker() {
+async function loadLicenseChecker() {
   try {
-    return require('license-checker-rseidelsohn');
+    // @lizenz/checker is native ESM and exposes a promise-based
+    // `runLicenseCheck` export (the old callback-based `init` still
+    // exists for backwards compatibility but is deprecated).
+    const { runLicenseCheck } = await import('@lizenz/checker');
+    return runLicenseCheck;
   } catch (err) {
     console.error(
-      '\n[!] "license-checker-rseidelsohn" is not installed.\n' +
+      '\n[!] "@lizenz/checker" is not installed.\n' +
         '    Install it first with:\n\n' +
-        '    npm install --save-dev license-checker-rseidelsohn\n'
+        '    npm install --save-dev @lizenz/checker\n'
     );
     process.exit(1);
   }
@@ -55,54 +54,52 @@ function ensureLicenseChecker() {
 
 // ---- Main ---------------------------------------------------------------
 
-function main() {
-  const checker = ensureLicenseChecker();
+async function main() {
+  const runLicenseCheck = await loadLicenseChecker();
 
-  checker.init(
-    {
+  let packages;
+  try {
+    packages = await runLicenseCheck({
       start: process.cwd(),
       production: prodOnly,
       excludePrivatePackages: true,
-    },
-    (err, packages) => {
-      if (err) {
-        console.error('Error while scanning dependencies:', err);
-        process.exit(1);
-      }
+    });
+  } catch (err) {
+    console.error('Error while scanning dependencies:', err);
+    process.exit(1);
+  }
 
-      const selfName = getSelfName();
-      const entries = Object.entries(packages)
-        .filter(([key]) => !key.startsWith(selfName + '@'))
-        .sort(([a], [b]) => a.localeCompare(b));
+  const selfName = getSelfName();
+  const entries = Object.entries(packages)
+    .filter(([key]) => !key.startsWith(selfName + '@'))
+    .sort(([a], [b]) => a.localeCompare(b));
 
-      const flagged = [];
-      const licenseGroups = {};
+  const flagged = [];
+  const licenseGroups = {};
 
-      for (const [nameVersion, info] of entries) {
-        const license = normalizeLicense(info.licenses);
-        if (!licenseGroups[license]) licenseGroups[license] = [];
-        licenseGroups[license].push({ nameVersion, info });
+  for (const [nameVersion, info] of entries) {
+    const license = normalizeLicense(info.licenses);
+    if (!licenseGroups[license]) licenseGroups[license] = [];
+    licenseGroups[license].push({ nameVersion, info });
 
-        if (FLAG_PATTERNS.some((re) => re.test(license))) {
-          flagged.push({ nameVersion, license });
-        }
-      }
-
-      const md = buildMarkdown(licenseGroups, flagged, entries.length);
-      fs.writeFileSync(outPath, md, 'utf8');
-
-      console.log(`\n✔ ${entries.length} packages scanned.`);
-      console.log(`✔ Written to ${path.relative(process.cwd(), outPath)}`);
-      if (flagged.length) {
-        console.log(
-          `\n⚠ ${flagged.length} package(s) use a license worth a manual look (e.g. copyleft):`
-        );
-        flagged.forEach((f) => console.log(`   - ${f.nameVersion} (${f.license})`));
-      } else {
-        console.log('✔ No copyleft-style licenses detected among the flagged patterns.');
-      }
+    if (FLAG_PATTERNS.some((re) => re.test(license))) {
+      flagged.push({ nameVersion, license });
     }
-  );
+  }
+
+  const md = buildMarkdown(licenseGroups, flagged, entries.length);
+  fs.writeFileSync(outPath, md, 'utf8');
+
+  console.log(`\n✔ ${entries.length} packages scanned.`);
+  console.log(`✔ Written to ${path.relative(process.cwd(), outPath)}`);
+  if (flagged.length) {
+    console.log(
+      `\n⚠ ${flagged.length} package(s) use a license worth a manual look (e.g. copyleft):`
+    );
+    flagged.forEach((f) => console.log(`   - ${f.nameVersion} (${f.license})`));
+  } else {
+    console.log('✔ No copyleft-style licenses detected among the flagged patterns.');
+  }
 }
 
 function getSelfName() {
@@ -131,7 +128,7 @@ function buildMarkdown(licenseGroups, flagged, total) {
   md += `The following is a list of all direct and transitive npm dependencies `;
   md += `at the time of generation (${today}), grouped by license type.\n\n`;
   md += `Generated automatically with \`generate-notices.js\` (based on `;
-  md += `[license-checker-rseidelsohn](https://www.npmjs.com/package/license-checker-rseidelsohn)). `;
+  md += `[@lizenz/checker](https://github.com/lizenz-tooling/checker)). `;
   md += `Total packages scanned: **${total}**.\n\n`;
 
   if (flagged.length) {
@@ -171,4 +168,7 @@ function buildMarkdown(licenseGroups, flagged, total) {
   return md;
 }
 
-main();
+main().catch((err) => {
+  console.error('Unexpected error:', err);
+  process.exit(1);
+});

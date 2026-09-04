@@ -8,19 +8,20 @@ and anyone who wants to generate or edit DataCite-compliant metadata.
 
 ---
 
-## DataCite Metadata Schema 4.6
+## DataCite Metadata Schema 4.7
 
-This application is based on the **DataCite Metadata Schema 4.6**. It implements the schema's core metadata elements, controlled vocabularies, identifier relationships, and validation rules to support the creation of DataCite-compliant metadata records.
+This application is based on the **DataCite Metadata Schema 4.7**. It implements the schema's core metadata elements, controlled vocabularies, identifier relationships, and validation rules to support the creation of DataCite-compliant metadata records.
 
-DataCite Metadata Working Group. (2024). DataCite Metadata Schema for the Publication and Citation of Research Data and Other Research Outputs. Version 4.6. DataCite e.V. [DOI: 10.14454/mzv1-5b55](https://doi.org/10.14454/mzv1-5b55)
+DataCite Metadata Working Group. (2024). DataCite Metadata Schema for the Publication and Citation of Research Data and Other Research Outputs. Version 4.7. DataCite e.V. [DOI: 10.14454/qdd3-ps68](https://doi.org/10.14454/qdd3-ps68)
 
 | Application version | DataCite Metadata Schema |
 |---------------------|--------------------------|
-| 1.0.x               | 4.6                      |
+| 1.0.0               | 4.6                      |
+| 1.1.x               | 4.7                      |
 
 In addition, the DataCite Metadata Generator is based on the DataCite Best Practice Guide: 
 
-Bayer, Christiane, Frech, Andreas, Gabriel, Vanessa, Kuemmet, Sonja, Luecke, Stephan, Meier, Laura, Munke, Johannes, Putnings, Markus, Rohrwild, Juergen, Schulz, Julian, Spenger, Martin, & Weber, Tobias. (2025). DataCite Best Practice Guide (Version 4.0). Zenodo. [DOI: 10.5281/zenodo.15607293](https://doi.org/10.5281/zenodo.15607293)
+Bayer, Christiane, Frech, Andreas, Gabriel, Vanessa, Kuemmet, Sonja, Luecke, Stephan, Meier, Laura, Munke, Johannes, Putnings, Markus, Rohrwild, Juergen, Schulz, Julian, Spenger, Martin, & Weber, Tobias. (2026). DataCite Best Practice Guide (Version 5.0). Zenodo. [DOI: 10.5281/zenodo.21904201](https://doi.org/10.5281/zenodo.21904201)
 
 ---
 
@@ -99,7 +100,7 @@ their respective licenses.
 ## Usage
 
 - Metadata creation
-    - Create metadata in compliance with DataCite Metadata Schema 4.6
+    - Create metadata in compliance with DataCite Metadata Schema 4.7
     - Inline validation highlights errors directly in the form
     - Assisted input using REST API lookups (e.g. ORCID, ROR)
     - Publisher identifier scheme can be inferred from common identifier patterns
@@ -156,7 +157,7 @@ datacite-metadata-generator-alpine.js/
 │       └── validation.js             # Central validation rules & normalization
 │
 ├── data/
-│   ├── dataCite-values.js            # DataCite Kernel 4.6 controlled vocabularies
+│   ├── dataCite-values.js            # DataCite Kernel 4.7 controlled vocabularies
 │   ├── iso_639-1.js                  # ISO 639-1 language code reference
 │   └── licenses.json                 # SPDX licenses reference: [SPDX Data for the Version 3.28.0 of the license list](https://github.com/spdx/license-list-data), 
 │

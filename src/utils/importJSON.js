@@ -147,9 +147,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.titleBlocks.length) {
-            app.titleBlocks = [
-                createEmptyTitleBlock()
-            ];
+            app.titleBlocks = [createEmptyTitleBlock()];
         }
 
         // Identifier
@@ -248,9 +246,7 @@ export function importFromJSON(app, jsonOrObject) {
                           rorHasSearched: false,
                       };
                   })
-                : [
-                      createEmptyNameIdentifier()
-                  ],
+                : [createEmptyNameIdentifier()],
 
             affiliations: c.affiliation?.length
                 ? c.affiliation.map((aff) => {
@@ -289,15 +285,11 @@ export function importFromJSON(app, jsonOrObject) {
                           rorHasSearched: false,
                       };
                   })
-                : [
-                      createEmptyAffiliation("creator")
-                  ],
+                : [createEmptyAffiliation("creator")],
         }));
 
         if (!app.creatorBlocks.length) {
-            app.creatorBlocks = [
-                createEmptyCreatorBlock()
-            ];
+            app.creatorBlocks = [createEmptyCreatorBlock()];
         }
 
         // Publication Year
@@ -325,9 +317,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.descriptionBlocks.length) {
-            app.descriptionBlocks = [
-                createEmptyDescriptionBlock()
-            ];
+            app.descriptionBlocks = [createEmptyDescriptionBlock()];
         }
 
         // Subjects
@@ -349,9 +339,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.subjectBlocks.length) {
-            app.subjectBlocks = [
-                createEmptySubjectBlock()
-            ];
+            app.subjectBlocks = [createEmptySubjectBlock()];
         }
 
         // Dates
@@ -371,9 +359,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.dateBlocks.length) {
-            app.dateBlocks = [
-                createEmptyDateBlock()
-            ];
+            app.dateBlocks = [createEmptyDateBlock()];
         }
 
         // Related Identifiers
@@ -394,6 +380,7 @@ export function importFromJSON(app, jsonOrObject) {
                 app.importVocabularyWarnings,
                 "relationType",
             ),
+            relationTypeInformation: ri.relationTypeInformation || "",
             relatedMetadataScheme: ri.relatedMetadataScheme || "",
             relatedMetadataSchemeURI: ri.schemeUri || "",
             relatedMetadataSchemeType: ri.schemeType || "",
@@ -410,9 +397,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.relatedIdentifierBlocks.length) {
-            app.relatedIdentifierBlocks = [
-                createEmptyRelatedIdentifierBlock()
-            ];
+            app.relatedIdentifierBlocks = [createEmptyRelatedIdentifierBlock()];
         }
 
         // Contributors
@@ -476,9 +461,7 @@ export function importFromJSON(app, jsonOrObject) {
                           rorHasSearched: false,
                       };
                   })
-                : [
-                      createEmptyNameIdentifier()
-                  ],
+                : [createEmptyNameIdentifier()],
             affiliations: c.affiliation?.length
                 ? c.affiliation.map((a) => ({
                       contributorAffiliation: a.name || "",
@@ -502,15 +485,11 @@ export function importFromJSON(app, jsonOrObject) {
                       rorResults: [],
                       rorHasSearched: false,
                   }))
-                : [
-                      createEmptyAffiliation("contributor")
-                  ],
+                : [createEmptyAffiliation("contributor")],
         }));
 
         if (!app.contributorBlocks.length) {
-            app.contributorBlocks = [
-                createEmptyContributorBlock()
-            ];
+            app.contributorBlocks = [createEmptyContributorBlock()];
         }
 
         // Geo Location
@@ -545,15 +524,11 @@ export function importFromJSON(app, jsonOrObject) {
                               )?.inPolygonPoint?.pointLongitude ?? "",
                       },
                   ]
-                : [
-                      createEmptyGeoLocationPolygon()
-                  ],
+                : [createEmptyGeoLocationPolygon()],
         }));
 
         if (!app.geoLocationBlocks.length) {
-            app.geoLocationBlocks = [
-                createEmptyGeoLocationBlock()
-            ];
+            app.geoLocationBlocks = [createEmptyGeoLocationBlock()];
         }
 
         // Language
@@ -582,9 +557,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.rightsBlocks.length) {
-            app.rightsBlocks = [
-                createEmptyRightBlock()
-            ];
+            app.rightsBlocks = [createEmptyRightBlock()];
         }
 
         // Funding Reference
@@ -616,9 +589,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.fundingReferenceBlocks.length) {
-            app.fundingReferenceBlocks = [
-                createEmptyFundingReferenceBlock()
-            ];
+            app.fundingReferenceBlocks = [createEmptyFundingReferenceBlock()];
         }
 
         // Alternate Identifiers
@@ -634,9 +605,7 @@ export function importFromJSON(app, jsonOrObject) {
         }));
 
         if (!app.altIdentifierBlocks.length) {
-            app.altIdentifierBlocks = [
-                createEmptyAlternateIdentifierBlock()
-            ];
+            app.altIdentifierBlocks = [createEmptyAlternateIdentifierBlock()];
         }
 
         // Sizes
@@ -668,8 +637,8 @@ export function importFromJSON(app, jsonOrObject) {
                   const relatedItemIdentifier = r.relatedItemIdentifier || {};
 
                   return {
-                    relatedItemIdentifierSearch: "",  
-                    relatedItemType: normalizeVocabularyValue(
+                      relatedItemIdentifierSearch: "",
+                      relatedItemType: normalizeVocabularyValue(
                           r.relatedItemType,
                           app.resourceTypeGeneralList,
                           "value",
@@ -698,6 +667,7 @@ export function importFromJSON(app, jsonOrObject) {
                           app.importVocabularyWarnings,
                           "relatedItem.relationType",
                       ),
+                      relationTypeInformation: r.relationTypeInformation || "",
                       creators: r.creators?.length
                           ? r.creators.map((c) => ({
                                 creatorName: c.name || "",
@@ -717,9 +687,7 @@ export function importFromJSON(app, jsonOrObject) {
                                     "relatedItem.creator.nameType",
                                 ),
                             }))
-                          : [
-                                createEmptyRelatedItemCreator()
-                            ],
+                          : [createEmptyRelatedItemCreator()],
                       titles: r.titles?.length
                           ? r.titles.map((t) => ({
                                 title: t.title || "",
@@ -779,17 +747,13 @@ export function importFromJSON(app, jsonOrObject) {
                                     "relatedItem.contributor.nameType",
                                 ),
                             }))
-                          : [
-                                createEmptyRelatedItemContributor()
-                            ],
+                          : [createEmptyRelatedItemContributor()],
                       doiImportState: "",
                   };
               })
-            : [
-                  createEmptyRelatedItemBlock()
-              ];
+            : [createEmptyRelatedItemBlock()];
 
-        app.jsonStatus = app.t("import.jsonSuccess");
+        app.jsonStatus = "";
 
         // Refresh preview
         app.regenerateAll();

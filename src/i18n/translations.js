@@ -15,7 +15,7 @@
 
 export const UI_TRANSLATIONS = {
     en: {
-        "header.title": "DataCite Metadata Generator - Kernel 4.6",
+        "header.title": "DataCite Metadata Generator - Kernel 4.7",
         "tab.mandatory": "Mandatory elements",
         "tab.recommended": "Recommended elements",
         "tab.other": "Optional elements",
@@ -89,6 +89,7 @@ export const UI_TRANSLATIONS = {
         "field.relatedIdentifier": "Related Identifier",
         "field.relatedIdentifierType": "Related Identifier Type",
         "field.relationType": "Relation Type",
+        "field.relationTypeInformation": "Relation Type Information",
         "field.relatedMetadataScheme": "Related Metadata Scheme",
         "field.relatedMetadataSchemeURI": "Related Metadata Scheme URI",
         "field.relatedMetadataSchemeType": "Related Metadata Scheme Type",
@@ -183,7 +184,7 @@ export const UI_TRANSLATIONS = {
         "action.clear": "Clear",
         "help.modalTitle": "Help",
         "help.placeholderText":
-            "Please consult the DataCite documentation for guidance: https://datacite-metadata-schema.readthedocs.io/en/4.6/.",
+            "Please consult the DataCite documentation for guidance: https://datacite-metadata-schema.readthedocs.io/en/4.7/.",
         "help.text.identifier":
             "The identifier assigns a unique and persistent identifier to the resource. DataCite supports DOIs that enable reliable referencing and citation of the resource. The resource's DOI is often provided by the publisher.",
         "help.text.titles":
@@ -207,7 +208,7 @@ export const UI_TRANSLATIONS = {
         "help.text.contributors":
             "Record individuals or organizations that contributed to the resource but are not listed as primary creators. Examples include editors, project leaders, data managers, or sponsoring institutions.",
         "help.text.relatedIdentifiers":
-            "Link the resource to related research outputs, such as publications, datasets, or software, and specify the nature of the relationship.",
+            "Link the resource to related research outputs, such as publications, datasets, or software, and specify the nature of the relationship. It is recommended to provide a more detailed description of the nature of the relationship if the type 'Other' is selected.",
         "help.text.geoLocation":
             "Describe the geographic coverage or reference of the resource. This may include coordinates, place names, geographic regions, or bounding boxes. Use this field especially for resources with a spatial component to improve discoverability and reuse.",
         "help.text.language": "Specify the primary language of the resource.",
@@ -224,7 +225,7 @@ export const UI_TRANSLATIONS = {
         "help.text.fundingReference":
             "Provide information about funding organizations and funding programs that supported the creation of the resource. Where possible, include grant numbers or award identifiers. This increases transparency and facilitates the tracking of research outputs.",
         "help.text.relatedItems":
-            "Link the resource to relevant publications, datasets, software projects, or other research outputs by using globally unique identifiers. Such relationships improve the traceability and contextual understanding of scholarly work.",
+            "Link the resource to relevant publications, datasets, software projects, or other research outputs by using globally unique identifiers. Such relationships improve the traceability and contextual understanding of scholarly work. It is recommended to provide a more detailed description of the nature of the relationship if the type 'Other' is selected.",
         "help.moreHelpLabel": "Further Help (DataCite Best Practice Guide):",
         "field.filename": "Filename",
         "aria.languageSwitcher": "Language switcher",
@@ -326,7 +327,7 @@ export const UI_TRANSLATIONS = {
         "footer.legalNoticeReferences": "Legal Notice & References",
     },
     de: {
-        "header.title": "DataCite Metadatengenerator - Kernel 4.6",
+        "header.title": "DataCite Metadatengenerator - Kernel 4.7",
         "tab.mandatory": "Pflichtelemente",
         "tab.recommended": "Empfohlene Elemente",
         "tab.other": "Optionale Elemente",
@@ -400,6 +401,7 @@ export const UI_TRANSLATIONS = {
         "field.relatedIdentifier": "Verwandter Identifikator",
         "field.relatedIdentifierType": "Typ des verwandten Identifikators",
         "field.relationType": "Beziehungstyp",
+        "field.relationTypeInformation": "Zusätzliche Informationen zum Beziehungstyp",
         "field.relatedMetadataScheme": "Metadatenschema",
         "field.relatedMetadataSchemeURI": "URI des Metadatenschemas",
         "field.relatedMetadataSchemeType": "Typ des Metadatenschemas",
@@ -495,7 +497,7 @@ export const UI_TRANSLATIONS = {
         "action.clear": "Leeren",
         "help.modalTitle": "Hilfe",
         "help.placeholderText":
-            "Bitte nutzen Sie die DataCite Dokumentation als Referenz: https://datacite-metadata-schema.readthedocs.io/en/4.6/.",
+            "Bitte nutzen Sie die DataCite Dokumentation als Referenz: https://datacite-metadata-schema.readthedocs.io/en/4.7/.",
         "help.text.identifier":
             "Der Identifikator weist der Ressource eine eindeutige und dauerhafte ID zu. DataCite unterstützt DOIs, über die die Ressource zuverlässig referenziert und zitiert werden kann. Der DOI für die Ressource wird häufig von der veröffentlichenden Institution bereitgestellt.",
         "help.text.titles":
@@ -519,7 +521,7 @@ export const UI_TRANSLATIONS = {
         "help.text.contributors":
             "Erfassen Sie Personen oder Organisationen, die zur Ressource beigetragen haben, ohne als Hauptverantwortliche (Urheber) aufgeführt zu werden. Beispiele sind Herausgebende, Projektleitungen, Kontaktpersonen oder betreuende Einrichtungen.",
         "help.text.relatedIdentifiers":
-            "Verknüpfen Sie die Ressource mit anderen Forschungsobjekten, z.B. Publikationen, Datensätzen oder Software, und beschreiben Sie die Art der Beziehung.",
+            "Verknüpfen Sie die Ressource mit anderen Forschungsobjekten, z.B. Publikationen, Datensätzen oder Software, und beschreiben Sie die Art der Beziehung. Es wird empfohlen, die Art der Beziehung näher zu beschreiben, wenn der Typ 'Other' ausgewählt wurde.",
         "help.text.geoLocation":
             "Beschreiben Sie den geografischen Bezug der Ressource. Dies kann durch Koordinaten, Ortsnamen, geografische Gebiete oder Begrenzungsrahmen erfolgen. Verwenden Sie dieses Feld insbesondere für Daten mit räumlichem Bezug, um die Auffindbarkeit und Nachnutzung zu verbessern.",
         "help.text.language": "Geben Sie die Hauptsprache der Ressource an.",
@@ -536,7 +538,7 @@ export const UI_TRANSLATIONS = {
         "help.text.fundingReference":
             "Geben Sie Informationen zu Förderern und Förderprogrammen an, die die Erstellung der Ressource unterstützt haben. Wenn möglich, erfassen Sie zusätzlich Förderkennzeichen oder Grant-Nummern. Dies erhöht die Transparenz und erleichtert die Nachverfolgung von Forschungsergebnissen.",
         "help.text.relatedItems":
-            "Verknüpfen Sie die Ressource mit relevanten Publikationen, Datensätzen, Softwareprojekten oder anderen Forschungsobjekten, indem sie einen eindeutigen Identifikator nutzen. Solche Beziehungen verbessern die Nachvollziehbarkeit wissenschaftlicher Zusammenhänge.",
+            "Verknüpfen Sie die Ressource mit relevanten Publikationen, Datensätzen, Softwareprojekten oder anderen Forschungsobjekten, indem sie einen eindeutigen Identifikator nutzen. Solche Beziehungen verbessern die Nachvollziehbarkeit wissenschaftlicher Zusammenhänge. Es wird empfohlen, die Art der Beziehung näher zu beschreiben, wenn der Typ 'Other' ausgewählt wurde.",
         "help.moreHelpLabel": "Weitere Hilfe (DataCite Best Practice Guide):",
         "field.filename": "Dateiname",
         "aria.languageSwitcher": "Sprachauswahl",

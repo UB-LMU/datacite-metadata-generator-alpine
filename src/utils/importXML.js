@@ -486,6 +486,7 @@ export function importFromXML(app, xmlText) {
                 app.importVocabularyWarnings,
                 "relationType",
             ),
+            relationTypeInformation: ri.getAttribute("relationTypeInformation") || "",
             relatedMetadataScheme:
                 ri.getAttribute("relatedMetadataScheme") || "",
             relatedMetadataSchemeURI: ri.getAttribute("schemeURI") || "",
@@ -1006,6 +1007,7 @@ export function importFromXML(app, xmlText) {
                     app.importVocabularyWarnings,
                     "relationType",
                 ),
+                relationTypeInformation: relatedItem.getAttribute("relationTypeInformation") || "",
                 relatedMetadataScheme:
                     relatedItem
                         .getElementsByTagNameNS(ns, "relatedItemIdentifier")[0]

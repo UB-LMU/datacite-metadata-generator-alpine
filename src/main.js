@@ -3,7 +3,7 @@
  * @description Entry point for the DataCite Metadata Generator.
  *
  * Registers the Alpine.js `metadataApp` component, which manages all
- * application state and user interactions for building DataCite Kernel 4.6
+ * application state and user interactions for building DataCite Kernel 4.7
  * metadata records. The component is mounted on the root `x-data` element
  * in index.html.
  *
@@ -279,13 +279,15 @@ Alpine.data("metadataApp", () => ({
     xmlStatus: "",
     json: "",
     jsonStatus: "",
-    importValidationSummary: "",
+    importValidationSummaryKey: "",
+    importValidationSummaryVars: {},
     importValidationLevel: "",
     importMissingMandatoryFields: [],
     importValidationSource: "",
     importVocabularyWarnings: [],
     importVocabularyWarningsRelItem: [],
-    mandatoryValidationSummary: "",
+    mandatoryValidationSummaryKey: "",
+    mandatoryValidationSummaryVars: {},
     mandatoryValidationLevel: "",
     mandatoryMissingFields: [],
     helpModalOpen: false,
@@ -888,6 +890,7 @@ Alpine.data("metadataApp", () => ({
             relatedIdentifier: block.relatedIdentifier,
             relatedIdentifierType: block.relatedIdentifierType,
             relationType: block.relationType,
+            relationTypeInformation: block.relationTypeInformation,
             relatedMetadataScheme: block.relatedMetadataScheme,
             relatedMetadataSchemeURI: block.relatedMetadataSchemeURI,
             relatedMetadataSchemeType: block.relatedMetadataSchemeType,
@@ -1277,6 +1280,7 @@ Alpine.data("metadataApp", () => ({
             relatedItemIdentifier: block.relatedItemIdentifier,
             relatedItemIdentifierType: block.relatedItemIdentifierType,
             relationType: block.relationType,
+            relationTypeInformation: block.relationTypeInformation,
             relatedMetadataScheme: block.relatedMetadataScheme,
             relatedIdentifierSchemeURI: block.relatedIdentifierSchemeURI,
             relatedIdentifierSchemeType: block.relatedIdentifierSchemeType,
@@ -1409,7 +1413,8 @@ Alpine.data("metadataApp", () => ({
      */
     async importViaDOI() {
         this.doiStatus = this.t("status.searching");
-        this.importValidationSummary = "";
+        this.importValidationSummaryKey = "";
+        this.importValidationSummaryVars = {};
         this.importValidationLevel = "";
         this.importMissingMandatoryFields = [];
         this.importValidationSource = "";
@@ -1423,7 +1428,8 @@ Alpine.data("metadataApp", () => ({
             // Keep only the unified import summary for successful imports.
             this.doiStatus = "";
         } else {
-            this.importValidationSummary = "";
+            this.importValidationSummaryKey = "";
+            this.importValidationSummaryVars = {};
             this.importValidationLevel = "";
             this.importMissingMandatoryFields = [];
             this.importValidationSource = "";
@@ -1460,7 +1466,8 @@ Alpine.data("metadataApp", () => ({
             // Keep only the unified import summary for successful imports.
             this.jsonStatus = "";
         } else {
-            this.importValidationSummary = "";
+            this.importValidationSummaryKey = "";
+            this.importValidationSummaryVars = {};
             this.importValidationLevel = "";
             this.importMissingMandatoryFields = [];
             this.importValidationSource = "";
@@ -1482,7 +1489,8 @@ Alpine.data("metadataApp", () => ({
             // Keep only the unified import summary for successful imports.
             this.xmlStatus = "";
         } else {
-            this.importValidationSummary = "";
+            this.importValidationSummaryKey = "";
+            this.importValidationSummaryVars = {};
             this.importValidationLevel = "";
             this.importMissingMandatoryFields = [];
             this.importValidationSource = "";
@@ -1506,7 +1514,8 @@ Alpine.data("metadataApp", () => ({
             this.xmlStatus = "";
             this.jsonStatus = "";
         } else {
-            this.importValidationSummary = "";
+            this.importValidationSummaryKey = "";
+            this.importValidationSummaryVars = {};
             this.importValidationLevel = "";
             this.importMissingMandatoryFields = [];
             this.importValidationSource = "";
@@ -1643,10 +1652,52 @@ Alpine.data("metadataApp", () => ({
     },
 
     /**
+     * Resolves a missing mandatory field descriptor to the current UI label.
+     *
+     * @param {{labelKey?: string, label?: string}} field - Missing field descriptor.
+     * @returns {string} Translated label for the current UI language.
+     */
+    getMandatoryFieldLabel(field) {
+        if (field?.labelKey) {
+            return this.t(field.labelKey);
+        }
+
+        return String(field?.label || "");
+    },
+
+    /**
+     * Resolves the import validation summary for the current UI language.
+     *
+     * @returns {string} Translated import validation summary.
+     */
+    getImportValidationSummary() {
+        return this.importValidationSummaryKey
+            ? this.t(
+                  this.importValidationSummaryKey,
+                  this.importValidationSummaryVars,
+              )
+            : "";
+    },
+
+    /**
+     * Resolves the mandatory validation summary for the current UI language.
+     *
+     * @returns {string} Translated mandatory validation summary.
+     */
+    getMandatoryValidationSummary() {
+        return this.mandatoryValidationSummaryKey
+            ? this.t(
+                  this.mandatoryValidationSummaryKey,
+                  this.mandatoryValidationSummaryVars,
+              )
+            : "";
+    },
+
+    /**
      * Inspects all mandatory DataCite fields and returns an array of
      * descriptors for any that are empty or invalid.
      *
-     * @returns {Array.<{key: string, label: string}>} Array of missing field descriptors.
+     * @returns {Array.<{key: string, labelKey: string}>} Array of missing field descriptors.
      */
     collectMissingMandatoryFields() {
         const missingFields = [];
@@ -1654,14 +1705,14 @@ Alpine.data("metadataApp", () => ({
         if (!this.identifier || !this.identifier.trim()) {
             missingFields.push({
                 key: "identifier",
-                label: this.t("field.identifier"),
+                labelKey: "field.identifier",
             });
         }
 
         if (!this.identifierType || !this.identifierType.trim()) {
             missingFields.push({
                 key: "identifierType",
-                label: this.t("field.identifierType"),
+                labelKey: "field.identifierType",
             });
         }
 
@@ -1669,7 +1720,7 @@ Alpine.data("metadataApp", () => ({
             (block) => block.title && block.title.trim(),
         );
         if (!hasTitle) {
-            missingFields.push({ key: "title", label: this.t("field.title") });
+            missingFields.push({ key: "title", labelKey: "field.title" });
         }
 
         const hasCreator = (this.creatorBlocks || []).some((block) => {
@@ -1681,21 +1732,21 @@ Alpine.data("metadataApp", () => ({
         if (!hasCreator) {
             missingFields.push({
                 key: "creator",
-                label: this.t("section.creators"),
+                labelKey: "section.creators",
             });
         }
 
         if (!this.publisher || !this.publisher.trim()) {
             missingFields.push({
                 key: "publisher",
-                label: this.t("field.publisher"),
+                labelKey: "field.publisher",
             });
         }
 
         if (!this.publicationYear || !this.publicationYear.toString().trim()) {
             missingFields.push({
                 key: "publicationYear",
-                label: this.t("section.publicationYear"),
+                labelKey: "section.publicationYear",
             });
         }
 
@@ -1706,7 +1757,7 @@ Alpine.data("metadataApp", () => ({
         ) {
             missingFields.push({
                 key: "publicationYear",
-                label: this.t("summary.publicationYearValidRequired"),
+                labelKey: "summary.publicationYearValidRequired",
             });
         }
 
@@ -1715,7 +1766,7 @@ Alpine.data("metadataApp", () => ({
         if (validateResourceTypeGeneral(this.resourceTypeGeneral)) {
             missingFields.push({
                 key: "resourceTypeGeneral",
-                label: this.t("field.resourceTypeGeneral"),
+                labelKey: "field.resourceTypeGeneral",
             });
         }
 
@@ -1733,19 +1784,18 @@ Alpine.data("metadataApp", () => ({
         const missingFields = this.collectMissingMandatoryFields();
 
         if (!missingFields.length) {
-            this.mandatoryValidationSummary = this.t(
-                "summary.mandatoryAllPresent",
-                { context: contextLabel },
-            );
+            this.mandatoryValidationSummaryKey = "summary.mandatoryAllPresent";
+            this.mandatoryValidationSummaryVars = { context: contextLabel };
             this.mandatoryValidationLevel = "success";
             this.mandatoryMissingFields = [];
             return { isValid: true, missingFields };
         }
 
-        this.mandatoryValidationSummary = this.t("summary.mandatoryMissing", {
+        this.mandatoryValidationSummaryKey = "summary.mandatoryMissing";
+        this.mandatoryValidationSummaryVars = {
             context: contextLabel,
             count: missingFields.length,
-        });
+        };
         this.mandatoryValidationLevel = "warning";
         this.mandatoryMissingFields = missingFields;
         return { isValid: false, missingFields };
@@ -1765,9 +1815,8 @@ Alpine.data("metadataApp", () => ({
         );
 
         if (!missingFields.length) {
-            this.importValidationSummary = this.t("summary.importAllPresent", {
-                source: sourceFormat,
-            });
+            this.importValidationSummaryKey = "summary.importAllPresent";
+            this.importValidationSummaryVars = { source: sourceFormat };
             this.importValidationLevel = "success";
             this.importMissingMandatoryFields = [];
             return;
@@ -1775,10 +1824,11 @@ Alpine.data("metadataApp", () => ({
 
         this.importMissingMandatoryFields = missingFields;
 
-        this.importValidationSummary = this.t("summary.importMissing", {
+        this.importValidationSummaryKey = "summary.importMissing";
+        this.importValidationSummaryVars = {
             source: sourceFormat,
             count: missingFields.length,
-        });
+        };
         this.importValidationLevel = "warning";
     },
 
@@ -1796,7 +1846,8 @@ Alpine.data("metadataApp", () => ({
 
         this.jsonStatus = "";
         this.xmlStatus = "";
-        this.importValidationSummary = "";
+        this.importValidationSummaryKey = "";
+        this.importValidationSummaryVars = {};
         this.importValidationLevel = "";
         this.importMissingMandatoryFields = [];
         this.importValidationSource = "";
@@ -1992,13 +2043,16 @@ Alpine.data("metadataApp", () => ({
         this.xmlStatus = "";
         this.json = "";
         this.jsonStatus = "";
-        ((this.yaml = ""), (this.importValidationSummary = ""));
+        this.yaml = "";
+        this.importValidationSummaryKey = "";
+        this.importValidationSummaryVars = {};
         this.importValidationLevel = "";
         this.importMissingMandatoryFields = [];
         this.importValidationSource = "";
         this.importVocabularyWarnings = [];
         this.importVocabularyWarningsRelItem = [];
-        this.mandatoryValidationSummary = "";
+        this.mandatoryValidationSummaryKey = "";
+        this.mandatoryValidationSummaryVars = {};
         this.mandatoryValidationLevel = "";
         this.mandatoryMissingFields = [];
         this.helpModalOpen = false;

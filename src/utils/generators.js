@@ -2,7 +2,7 @@
  * @file generators.js
  * @description Generates DataCite-compliant XML and JSON output from the
  * current Alpine.js application state. Both formats follow the
- * DataCite Metadata Schema Kernel 4.6.
+ * DataCite Metadata Schema Kernel 4.7.
  *
  * Exported functions:
  *   - {@link generateXML}  – produces a formatted XML string
@@ -30,7 +30,7 @@ function escapeXml(str) {
 }
 
 /**
- * Generates a DataCite Kernel 4.6 XML string from the current app state.
+ * Generates a DataCite Kernel 4.7 XML string from the current app state.
  *
  * Only fields that contain a non-empty value are included in the output.
  * Attributes are serialised with {@link escapeXml} to ensure valid XML.
@@ -263,6 +263,7 @@ export function generateXML(state) {
           push_attr("    ", "relatedIdentifier", ri.relatedIdentifier, {
             relatedIdentifierType: ri.relatedIdentifierType || "",
             relationType: ri.relationType || "",
+            relationTypeInformation: ri.relationTypeInformation || "",
             relatedMetadataScheme: ri.relatedMetadataScheme || "",
             schemeURI: ri.relatedMetadataSchemeURI || "",
             schemeType: ri.relatedMetadataSchemeType || "",
@@ -272,6 +273,7 @@ export function generateXML(state) {
           push_attr("    ", "relatedIdentifier", ri.relatedIdentifier, {
             relatedIdentifierType: ri.relatedIdentifierType || "",
             relationType: ri.relationType || "",
+            relationTypeInformation: ri.relationTypeInformation || "",
             resourceTypeGeneral: ri.resourceTypeGeneral || "",
           });
         }
@@ -495,7 +497,7 @@ export function generateXML(state) {
         relatedItems.forEach((r) => {
             if (r.relatedItemType && r.relationType) {
                 lines.push(
-                    `    <relatedItem ${r.relatedItemType ? `relatedItemType="${escapeXml(r.relatedItemType)}"` : ""} ${r.relationType ? `relationType="${escapeXml(r.relationType)}"` : ""}>`,
+                    `    <relatedItem ${r.relatedItemType ? `relatedItemType="${escapeXml(r.relatedItemType)}"` : ""} ${r.relationType ? `relationType="${escapeXml(r.relationType)}"` : ""} ${r.relationTypeInformation ? `relationTypeInformation="${escapeXml(r.relationTypeInformation)}"` : ""}>`,
                 );
             } else {
                 lines.push("    <relatedItem>");
@@ -646,7 +648,7 @@ function removeEmpty(obj) {
 }
 
 /**
- * Generates a DataCite Kernel 4.6 JSON string from the current app state.
+ * Generates a DataCite Kernel 4.7 JSON string from the current app state.
  *
  * The output follows the DataCite REST API JSON structure
  * (`data.attributes.*`). Empty fields are stripped via {@link removeEmpty}
@@ -743,6 +745,7 @@ export function generateJSON(state) {
                 relatedIdentifiers: (state.relatedIdentifierBlocks || []).map(
                     (ri) => ({
                         relationType: ri.relationType || "",
+                        relationTypeInformation: ri.relationTypeInformation || "",
                         relatedIdentifier: ri.relatedIdentifier || "",
                         resourceTypeGeneral: ri.resourceTypeGeneral || "",
                         relatedIdentifierType: ri.relatedIdentifierType || "",
@@ -781,6 +784,7 @@ export function generateJSON(state) {
                         contributorType: rico.contributorType || "",
                     })),
                     relationType: ri.relationType || "",
+                    relationTypeInformation: ri.relationTypeInformation || "",
                     publicationYear: ri.publicationYear || "",
                     relatedItemType: ri.relatedItemType || "",
                     relatedItemIdentifier: {
@@ -876,7 +880,7 @@ export function generateJSON(state) {
 }
 
 /**
- * Generates a DataCite Kernel 4.6 YAML string from the current app state.
+ * Generates a DataCite Kernel 4.7 YAML string from the current app state.
  * Internally uses the same data structure as {@link generateJSON} but
  * serialises it as YAML for human-friendly output.
  *

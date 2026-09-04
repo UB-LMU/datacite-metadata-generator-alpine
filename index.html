@@ -55,12 +55,31 @@
                     d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
                     clip-rule="evenodd" />
             </symbol>
-            <symbol id="hi-chevron-double-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+            <symbol
+                id="hi-chevron-double-up"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m4.5 12.75 7.5-7.5 7.5 7.5" />
             </symbol>
-            <symbol id="hi-chevron-double-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+            <symbol
+                id="hi-chevron-double-right"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
             </symbol>
             <symbol id="hi-mandatory" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -309,7 +328,9 @@
                                         </a>
                                     </div>
 
-                                    <div class="flex justify-end" x-show="index > 0">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
                                         <button
                                             type="button"
                                             @click="removeBlock(index, 'title')"
@@ -323,15 +344,13 @@
                                                 x-text="$store.i18n.t('action.removeTitle')"></span>
                                         </button>
                                     </div>
-                                </div>  
+                                </div>
                             </template>
                             <button
                                 type="button"
                                 @click="addBlock('title')"
                                 class="btn px-3 py-1">
-                                <svg
-                                    class="size-4 shrink-0"
-                                    aria-hidden="true">
+                                <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
                                 <span
@@ -345,22 +364,29 @@
                     <!-- Creators -->
                     <div class="space-y-2">
                         <div class="flex justify-between">
-                            <label class="label text-lg" x-text="$store.i18n.t('section.creators')"></label>
+                            <label
+                                class="label text-lg"
+                                x-text="$store.i18n.t('section.creators')"></label>
                             <a
                                 @click.prevent="openHelp('https://ub-lmu.github.io/DataCite_BestPracticeGuide/#how-should-i-specify-a-person',
                                 'help.text.creators')"
                                 class="btn-help"
-                            >?</a>
+                                >?</a
+                            >
                         </div>
-                    
+
                         <div x-effect="regenerateAll()">
-                            <template x-for="(block, index) in creatorBlocks" :key="index">
+                            <template
+                                x-for="(block, index) in creatorBlocks"
+                                :key="index">
                                 <div class="entity-card">
-                    
                                     <!-- Quick search: ORCID (Person) or ROR (Organisation) -->
                                     <div class="mb-6">
                                         <div class="flex gap-x-2">
-                                            <select x-model="block.searchType" class="input bg-slate-200 flex-1" @change="
+                                            <select
+                                                x-model="block.searchType"
+                                                class="input bg-slate-200 flex-1"
+                                                @change="
                                                     block.nameIdentifiers[0].orcidSearchQuery = '';
                                                     block.nameIdentifiers[0].orcidResults = [];
                                                     block.nameIdentifiers[0].orcidDropdownOpen = false;
@@ -370,310 +396,491 @@
                                                     block.nameIdentifiers[0].rorDropdownOpen = false;
                                                     block.nameIdentifiers[0].rorHasSearched = false;
                                                 ">
-                                                <option value="" x-text="$store.i18n.t('field.searchType')"></option>
-                                                <option value="ORCID">ORCID</option>
+                                                <option
+                                                    value=""
+                                                    x-text="$store.i18n.t('field.searchType')"></option>
+                                                <option value="ORCID">
+                                                    ORCID
+                                                </option>
                                                 <option value="ROR">ROR</option>
                                             </select>
-                    
+
                                             <!-- ORCID quick search -->
-                                            <div x-show="block.searchType === 'ORCID'" class="flex-2 relative">
+                                            <div
+                                                x-show="block.searchType === 'ORCID'"
+                                                class="flex-2 relative">
                                                 <div class="flex gap-2">
-                                                    <input x-model="block.nameIdentifiers[0].orcidSearchQuery"
+                                                    <input
+                                                        x-model="block.nameIdentifiers[0].orcidSearchQuery"
                                                         @input.debounce.500ms="orcidSearch(index, 0, 'creator')"
                                                         :placeholder="$store.i18n.t('field.orcidSearchPlaceholder')"
                                                         class="input p-2 w-full bg-slate-200" />
-                    
-                                                    <button type="button" x-show="block.nameIdentifiers[0].nameIdentifier != ''" @click="
+
+                                                    <button
+                                                        type="button"
+                                                        x-show="block.nameIdentifiers[0].nameIdentifier != ''"
+                                                        @click="
                                                             clearORCID(index, 0, 'creator');
                                                             block.nameType = '';
-                                                        " class="btn p-2">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-x-mark" />
+                                                        "
+                                                        class="btn p-2">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-x-mark" />
                                                         </svg>
                                                     </button>
                                                 </div>
-                    
-                                                <ul x-show="block.nameIdentifiers[0].orcidDropdownOpen" x-transition
+
+                                                <ul
+                                                    x-show="block.nameIdentifiers[0].orcidDropdownOpen"
+                                                    x-transition
                                                     class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
                                                     <!-- Loading -->
-                                                    <li x-show="block.nameIdentifiers[0].orcidLoading"
+                                                    <li
+                                                        x-show="block.nameIdentifiers[0].orcidLoading"
                                                         class="px-3 py-2 flex items-center gap-2 text-gray-500">
-                                                        <span x-text="$store.i18n.t('status.loading')"></span>
+                                                        <span
+                                                            x-text="$store.i18n.t('status.loading')"></span>
                                                     </li>
-                    
-                                                    <template x-for="item in block.nameIdentifiers[0].orcidResults" :key="item.id">
-                                                        <li @click="
+
+                                                    <template
+                                                        x-for="item in block.nameIdentifiers[0].orcidResults"
+                                                        :key="item.id">
+                                                        <li
+                                                            @click="
                                                                 selectORCID(item, index, 0, 'creator');
                                                                 block.nameType = 'Personal';
                                                             "
                                                             x-show="!block.nameIdentifiers[0].orcidLoading && block.nameIdentifiers[0].orcidHasSearched"
                                                             class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md">
                                                             <div
-                                                                x-text="`${item.firstName + ' ' + item.familyName}${item.institution ? ' | ' + item.institution : ''}`">
-                                                            </div>
-                                                            <div class="flex items-center gap-2">
-                                                                <img src="/media/ORCID-iD_icon_16x16.png" alt="ORCID Icon"
+                                                                x-text="`${item.firstName + ' ' + item.familyName}${item.institution ? ' | ' + item.institution : ''}`"></div>
+                                                            <div
+                                                                class="flex items-center gap-2">
+                                                                <img
+                                                                    src="/media/ORCID-iD_icon_16x16.png"
+                                                                    alt="ORCID Icon"
                                                                     class="w-4 h-4 shrink-0" />
-                                                                <div class="text-gray-500" x-text="item.id"></div>
+                                                                <div
+                                                                    class="text-gray-500"
+                                                                    x-text="item.id"></div>
                                                             </div>
                                                         </li>
                                                     </template>
                                                 </ul>
                                             </div>
-                    
+
                                             <!-- ROR quick search -->
-                                            <div x-show="block.searchType === 'ROR'" class="flex-2 relative">
+                                            <div
+                                                x-show="block.searchType === 'ROR'"
+                                                class="flex-2 relative">
                                                 <div class="flex gap-2">
-                                                    <input x-model="block.nameIdentifiers[0].rorSearchQuery"
+                                                    <input
+                                                        x-model="block.nameIdentifiers[0].rorSearchQuery"
                                                         @input="fetchResults(index, 0, 'creatorNameId')"
                                                         @focus="block.nameIdentifiers[0].rorDropdownOpen = true"
                                                         @click.away="block.nameIdentifiers[0].rorDropdownOpen = false"
                                                         :placeholder="$store.i18n.t('field.rorSearchPlaceholder')"
                                                         class="input p-2 w-full bg-slate-200" />
-                    
-                                                    <button type="button" x-show="block.nameIdentifiers[0].nameIdentifier != ''" @click="
+
+                                                    <button
+                                                        type="button"
+                                                        x-show="block.nameIdentifiers[0].nameIdentifier != ''"
+                                                        @click="
                                                             clearROR(index, 0, 'creatorNameId');
                                                             block.nameType = '';
-                                                        " class="btn p-2">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-x-mark" />
+                                                        "
+                                                        class="btn p-2">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-x-mark" />
                                                         </svg>
                                                     </button>
                                                 </div>
-                    
-                                                <ul x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorResults.length > 0"
+
+                                                <ul
+                                                    x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorResults.length > 0"
                                                     x-transition
                                                     class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
-                                                    <template x-for="item in block.nameIdentifiers[0].rorResults" :key="item.id">
-                                                        <li @click="
+                                                    <template
+                                                        x-for="item in block.nameIdentifiers[0].rorResults"
+                                                        :key="item.id">
+                                                        <li
+                                                            @click="
                                                                 selectROR(item, index, 0, 'creatorNameId');
                                                                 block.nameType = 'Organizational';
-                                                            " class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
+                                                            "
+                                                            class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
                                                             x-text="`${item.name}${item.location ? ' | ' + item.location : ''}`"></li>
                                                     </template>
-                                                </ul> 
+                                                </ul>
                                             </div>
                                         </div>
-                    
+
                                         <!-- Status messages for the quick search -->
                                         <div class="mt-1 space-y-1">
-                                            <p x-show="block.searchType === 'ORCID' && !block.nameIdentifiers[0].orcidLoading && block.nameIdentifiers[0].orcidHasSearched && block.nameIdentifiers[0].orcidResults.length === 0"
-                                                class="error text-sm px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
-                                            <p x-show="block.nameIdentifiers[0].importState" class="text-sm px-1"
+                                            <p
+                                                x-show="block.searchType === 'ORCID' && !block.nameIdentifiers[0].orcidLoading && block.nameIdentifiers[0].orcidHasSearched && block.nameIdentifiers[0].orcidResults.length === 0"
+                                                class="error text-sm px-1"
+                                                x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                            <p
+                                                x-show="block.nameIdentifiers[0].importState"
+                                                class="text-sm px-1"
                                                 :class="{ 'text-green-700': block.nameIdentifiers[0].importStateType === 'success', 'text-red-600': block.nameIdentifiers[0].importStateType === 'error' }"
                                                 x-text="block.nameIdentifiers[0].importState"></p>
-                                            <p x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorHasSearched && block.nameIdentifiers[0].rorResults.length === 0"
-                                                    class="error text-sm mt-1 px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                            <p
+                                                x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorHasSearched && block.nameIdentifiers[0].rorResults.length === 0"
+                                                class="error text-sm mt-1 px-1"
+                                                x-text="$store.i18n.t('status.noMatchesFound')"></p>
                                         </div>
                                     </div>
 
-                                    <!-- Name -->                    
+                                    <!-- Name -->
                                     <div class="flex gap-x-2 mb-3">
-                                        <select x-model="block.nameType" class="input"
+                                        <select
+                                            x-model="block.nameType"
+                                            class="input"
                                             @change="if (block.nameType === 'Organizational') { block.familyName = ''; block.givenName = '' }">
-                                            <option value="" x-text="$store.i18n.t('field.nameType')"></option>
-                                            <template x-for="option in nameTypes" :key="option.value">
-                                                <option :value="option.value" :selected="option.value === block.nameType"
+                                            <option
+                                                value=""
+                                                x-text="$store.i18n.t('field.nameType')"></option>
+                                            <template
+                                                x-for="option in nameTypes"
+                                                :key="option.value">
+                                                <option
+                                                    :value="option.value"
+                                                    :selected="option.value === block.nameType"
                                                     x-text="option.label"></option>
                                             </template>
                                         </select>
                                     </div>
-                    
-                                    <div x-show="block.nameType != 'Organizational'" class="flex gap-x-2 mb-3" @change="if (block.givenName !== '' && block.familyName !== '') { 
+
+                                    <div
+                                        x-show="block.nameType != 'Organizational'"
+                                        class="flex gap-x-2 mb-3"
+                                        @change="if (block.givenName !== '' && block.familyName !== '') { 
                                             block.creatorName = block.familyName + ', ' + block.givenName 
                                         }">
-                                        <input type="text" x-model="block.givenName" class="input" @blur="validateCreatorBlock(block)"
+                                        <input
+                                            type="text"
+                                            x-model="block.givenName"
+                                            class="input"
+                                            @blur="validateCreatorBlock(block)"
                                             :placeholder="$store.i18n.t('field.givenName')" />
-                                        <input type="text" x-model="block.familyName" data-mandatory-field="creator" class="input"
-                                            @blur="validateCreatorBlock(block)" :placeholder="$store.i18n.t('field.familyName')" />
+                                        <input
+                                            type="text"
+                                            x-model="block.familyName"
+                                            data-mandatory-field="creator"
+                                            class="input"
+                                            @blur="validateCreatorBlock(block)"
+                                            :placeholder="$store.i18n.t('field.familyName')" />
                                     </div>
                                     <div class="flex gap-x-2">
-                                        <input type="text" x-model="block.creatorName" class="input" @blur="validateCreatorBlock(block)"
+                                        <input
+                                            type="text"
+                                            x-model="block.creatorName"
+                                            class="input"
+                                            @blur="validateCreatorBlock(block)"
                                             :placeholder="$store.i18n.t('field.name')" />
-                                        <select x-model="block.creatorNameLanguage" class="input">
-                                            <option value="" x-text="$store.i18n.t('field.language')"></option>
-                                            <template x-for="lang in languageCodes" :key="lang.code">
-                                                <option :value="lang.code" :selected="lang.code === block.creatorNameLanguage"
+                                        <select
+                                            x-model="block.creatorNameLanguage"
+                                            class="input">
+                                            <option
+                                                value=""
+                                                x-text="$store.i18n.t('field.language')"></option>
+                                            <template
+                                                x-for="lang in languageCodes"
+                                                :key="lang.code">
+                                                <option
+                                                    :value="lang.code"
+                                                    :selected="lang.code === block.creatorNameLanguage"
                                                     x-text="lang.name"></option>
                                             </template>
                                         </select>
                                     </div>
-                    
+
                                     <template x-if="block.creatorNameError">
-                                        <p class="error" x-text="block.creatorNameError"></p>
+                                        <p
+                                            class="error"
+                                            x-text="block.creatorNameError"></p>
                                     </template>
-                    
+
                                     <div class="my-6"></div>
-                    
+
                                     <!-- Creator NameIdentifiers -->
-                                    <label class="label px-1" x-text="$store.i18n.t('section.nameIdentifiers')"></label>
-                                    <template x-for="(id, i) in block.nameIdentifiers" :key="i">
+                                    <label
+                                        class="label px-1"
+                                        x-text="$store.i18n.t('section.nameIdentifiers')"></label>
+                                    <template
+                                        x-for="(id, i) in block.nameIdentifiers"
+                                        :key="i">
                                         <div class="mb-3">
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
                                             <div>
                                                 <div class="flex gap-x-2">
-                                                    <select x-model="id.nameIdentifierScheme"
+                                                    <select
+                                                        x-model="id.nameIdentifierScheme"
                                                         @change="id.nameIdentifierSchemeURI = nameIdentifierSchemes.find(o => o.value === id.nameIdentifierScheme)?.uri || ''"
                                                         class="input flex-1">
-                                                        <option value="" x-text="$store.i18n.t('field.nameIdentifierScheme')"></option>
-                                                        <template x-for="option in nameIdentifierSchemes" :key="option.value">
-                                                            <option :value="option.value"
-                                                                :selected="option.value === id.nameIdentifierScheme" x-text="option.label">
-                                                            </option>
+                                                        <option
+                                                            value=""
+                                                            x-text="$store.i18n.t('field.nameIdentifierScheme')"></option>
+                                                        <template
+                                                            x-for="option in nameIdentifierSchemes"
+                                                            :key="option.value">
+                                                            <option
+                                                                :value="option.value"
+                                                                :selected="option.value === id.nameIdentifierScheme"
+                                                                x-text="option.label"></option>
                                                         </template>
                                                     </select>
-                                     
+
                                                     <div class="flex-2">
-                                                        <input type="text" x-model="id.nameIdentifier" class="input p-2"
-                                                            :placeholder="$store.i18n.t('field.nameIdentifier')"  />
+                                                        <input
+                                                            type="text"
+                                                            x-model="id.nameIdentifier"
+                                                            class="input p-2"
+                                                            :placeholder="$store.i18n.t('field.nameIdentifier')" />
                                                     </div>
                                                 </div>
-                    
-                                                <template x-if="id.nameIdentifierSchemeError">
-                                                    <p class="error" x-text="id.nameIdentifierSchemeError"></p>
+
+                                                <template
+                                                    x-if="id.nameIdentifierSchemeError">
+                                                    <p
+                                                        class="error"
+                                                        x-text="id.nameIdentifierSchemeError"></p>
                                                 </template>
                                             </div>
-                    
-                                            <div class="flex gap-x-2 justify-end">
-                                                <button type="button" x-show="i === block.nameIdentifiers.length - 1"
-                                                    @click="addNestedBlock(index, 'nameIdentifier')" class="btn px-3 py-1 mr-auto mt-3">
-                                                    <svg class="size-4 shrink-0" aria-hidden="true">
+
+                                            <div
+                                                class="flex gap-x-2 justify-end">
+                                                <button
+                                                    type="button"
+                                                    x-show="i === block.nameIdentifiers.length - 1"
+                                                    @click="addNestedBlock(index, 'nameIdentifier')"
+                                                    class="btn px-3 py-1 mr-auto mt-3">
+                                                    <svg
+                                                        class="size-4 shrink-0"
+                                                        aria-hidden="true">
                                                         <use href="#hi-plus" />
                                                     </svg>
-                                                    <span x-text="$store.i18n.t('action.addNameIdentifier')"></span>
+                                                    <span
+                                                        x-text="$store.i18n.t('action.addNameIdentifier')"></span>
                                                 </button>
-                                                <button type="button" x-show="i > 0" @click="removeNestedBlock(index, i, 'nameIdentifier')"
+                                                <button
+                                                    type="button"
+                                                    x-show="i > 0"
+                                                    @click="removeNestedBlock(index, i, 'nameIdentifier')"
                                                     class="btn btn-remove p-2 ml-2 mt-3">
-                                                    <svg class="size-4 shrink-0" aria-hidden="true">
+                                                    <svg
+                                                        class="size-4 shrink-0"
+                                                        aria-hidden="true">
                                                         <use href="#hi-trash" />
                                                     </svg>
-                                                    <span x-text="$store.i18n.t('action.removeNameIdentifier')"></span>
+                                                    <span
+                                                        x-text="$store.i18n.t('action.removeNameIdentifier')"></span>
                                                 </button>
                                             </div>
                                         </div>
                                     </template>
-                    
+
                                     <div class="my-6"></div>
-                    
+
                                     <!-- Creator Affiliation -->
-                                    <label class="label px-1" x-text="$store.i18n.t('section.affiliations')"></label>
-                                    <template x-for="(id, i) in block.affiliations" :key="i">
-                                        <div>                
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                    <label
+                                        class="label px-1"
+                                        x-text="$store.i18n.t('section.affiliations')"></label>
+                                    <template
+                                        x-for="(id, i) in block.affiliations"
+                                        :key="i">
+                                        <div>
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
 
                                             <!-- Quick search: ROR (Organisation) -->
                                             <div class="mb-6">
                                                 <div class="flex gap-x-2">
-                                                    <select x-model="id.searchType" class="input bg-slate-200 flex-1" @change="
+                                                    <select
+                                                        x-model="id.searchType"
+                                                        class="input bg-slate-200 flex-1"
+                                                        @change="
                                                             id.rorSearchQuery = '';
                                                             id.rorResults = [];
                                                             id.rorDropdownOpen = false;
                                                             id.rorHasSearched = false;
                                                             ">
-                                                        <option value="" x-text="$store.i18n.t('field.searchType')"></option>
-                                                        <option value="ROR">ROR</option>
+                                                        <option
+                                                            value=""
+                                                            x-text="$store.i18n.t('field.searchType')"></option>
+                                                        <option value="ROR">
+                                                            ROR
+                                                        </option>
                                                     </select>
-                                        
+
                                                     <!-- ROR quick search -->
-                                                    <div x-show="id.searchType === 'ROR'" class="flex-2 relative">
+                                                    <div
+                                                        x-show="id.searchType === 'ROR'"
+                                                        class="flex-2 relative">
                                                         <div class="flex gap-2">
-                                                            <input x-model="id.rorSearchQuery"
+                                                            <input
+                                                                x-model="id.rorSearchQuery"
                                                                 @input="fetchResults(index, i, 'creatorAffiliation')"
                                                                 @focus="id.rorDropdownOpen = true"
                                                                 @click.away="id.rorDropdownOpen = false"
                                                                 :placeholder="$store.i18n.t('field.rorSearchPlaceholder')"
                                                                 class="input p-2 w-full bg-slate-200" />
-                                        
-                                                            <button type="button" x-show="id.affiliationIdentifier != ''" 
-                                                                @click="clearROR(index, i, 'creatorAffiliation');" class="btn p-2">
-                                                                <svg class="size-4 shrink-0" aria-hidden="true">
-                                                                    <use href="#hi-x-mark" />
+
+                                                            <button
+                                                                type="button"
+                                                                x-show="id.affiliationIdentifier != ''"
+                                                                @click="clearROR(index, i, 'creatorAffiliation');"
+                                                                class="btn p-2">
+                                                                <svg
+                                                                    class="size-4 shrink-0"
+                                                                    aria-hidden="true">
+                                                                    <use
+                                                                        href="#hi-x-mark" />
                                                                 </svg>
                                                             </button>
                                                         </div>
-                                        
-                                                        <ul x-show="id.rorDropdownOpen && id.rorResults.length > 0"
+
+                                                        <ul
+                                                            x-show="id.rorDropdownOpen && id.rorResults.length > 0"
                                                             x-transition
                                                             class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
-                                                            <template x-for="item in id.rorResults" :key="item.id">
-                                                                <li @click="selectROR(item, index, i, 'creatorAffiliation');"
+                                                            <template
+                                                                x-for="item in id.rorResults"
+                                                                :key="item.id">
+                                                                <li
+                                                                    @click="selectROR(item, index, i, 'creatorAffiliation');"
                                                                     class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
                                                                     x-text="`${item.name}${item.location ? ' | ' + item.location : ''}`"></li>
                                                             </template>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                        
+
                                                 <!-- Status messages for the quick search -->
                                                 <div class="mt-1 space-y-1">
-                                                    <p x-show="id.searchType === 'ROR' && id.rorDropdownOpen && id.rorHasSearched && id.rorResults.length === 0"
-                                                        class="error text-sm mt-1 px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                                    <p
+                                                        x-show="id.searchType === 'ROR' && id.rorDropdownOpen && id.rorHasSearched && id.rorResults.length === 0"
+                                                        class="error text-sm mt-1 px-1"
+                                                        x-text="$store.i18n.t('status.noMatchesFound')"></p>
                                                 </div>
                                             </div>
-                                        
+
                                             <div>
                                                 <div class="flex gap-x-2 mb-3">
-                                                    <input type="text" x-model="id.creatorAffiliation" class="input p-2"
+                                                    <input
+                                                        type="text"
+                                                        x-model="id.creatorAffiliation"
+                                                        class="input p-2"
                                                         :placeholder="$store.i18n.t('field.creatorAffiliation')" />
                                                 </div>
-                                        
+
                                                 <div class="mb-3">
                                                     <div class="flex gap-x-2">
-                                                        <select x-model="id.affiliationIdentifierScheme"
+                                                        <select
+                                                            x-model="id.affiliationIdentifierScheme"
                                                             @change="id.affiliationIdentifierSchemeURI = affiliationIdentifierSchemes.find(o => o.value === id.affiliationIdentifierScheme)?.uri || ''"
                                                             class="border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-1/2 px-2 py-1">
-                                                            <option value="" x-text="$store.i18n.t('field.affiliationIdentifierScheme')">
-                                                            </option>
-                                                            <template x-for="option in affiliationIdentifierSchemes" :key="option.value">
-                                                                <option :value="option.value" :selected="option.value === id.affiliationIdentifierScheme" 
-                                                                x-text="option.label"></option>
+                                                            <option
+                                                                value=""
+                                                                x-text="$store.i18n.t('field.affiliationIdentifierScheme')"></option>
+                                                            <template
+                                                                x-for="option in affiliationIdentifierSchemes"
+                                                                :key="option.value">
+                                                                <option
+                                                                    :value="option.value"
+                                                                    :selected="option.value === id.affiliationIdentifierScheme"
+                                                                    x-text="option.label"></option>
                                                             </template>
                                                         </select>
 
-                                                        <input type="text" x-model="id.affiliationIdentifier" class="input"
+                                                        <input
+                                                            type="text"
+                                                            x-model="id.affiliationIdentifier"
+                                                            class="input"
                                                             :placeholder="$store.i18n.t('field.affiliationIdentifier')" />
                                                     </div>
-                                        
-                                                    <template x-if="id.affiliationIdentifierSchemeError">
-                                                        <p class="error" x-text="id.affiliationIdentifierSchemeError"></p>
+
+                                                    <template
+                                                        x-if="id.affiliationIdentifierSchemeError">
+                                                        <p
+                                                            class="error"
+                                                            x-text="id.affiliationIdentifierSchemeError"></p>
                                                     </template>
                                                 </div>
-                                        
-                                                <div class="flex gap-x-2 justify-end">
-                                                    <button type="button" x-show="i === block.affiliations.length - 1"
-                                                        @click="addNestedBlock(index, 'creatorAffiliation')" class="btn px-3 py-1 mr-auto mb-3">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-plus" />
+
+                                                <div
+                                                    class="flex gap-x-2 justify-end">
+                                                    <button
+                                                        type="button"
+                                                        x-show="i === block.affiliations.length - 1"
+                                                        @click="addNestedBlock(index, 'creatorAffiliation')"
+                                                        class="btn px-3 py-1 mr-auto mb-3">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-plus" />
                                                         </svg>
-                                                        <span x-text="$store.i18n.t('action.addAffiliation')"></span>
+                                                        <span
+                                                            x-text="$store.i18n.t('action.addAffiliation')"></span>
                                                     </button>
-                                                    <button type="button" x-show="i > 0" @click="removeNestedBlock(index, i, 'creatorAffiliation')"
+                                                    <button
+                                                        type="button"
+                                                        x-show="i > 0"
+                                                        @click="removeNestedBlock(index, i, 'creatorAffiliation')"
                                                         class="btn btn-remove p-2 ml-2 mb-3">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-trash" />
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-trash" />
                                                         </svg>
-                                                        <span x-text="$store.i18n.t('action.removeAffiliation')"></span>
+                                                        <span
+                                                            x-text="$store.i18n.t('action.removeAffiliation')"></span>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </template>
-                    
-                                    <div class="flex justify-end" x-show="index > 0">
-                                        <button type="button" @click="removeBlock(index, 'creator')" class="btn btn-remove px-3 py-1">
-                                            <svg class="size-4 shrink-0" aria-hidden="true">
+
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
+                                        <button
+                                            type="button"
+                                            @click="removeBlock(index, 'creator')"
+                                            class="btn btn-remove px-3 py-1">
+                                            <svg
+                                                class="size-4 shrink-0"
+                                                aria-hidden="true">
                                                 <use href="#hi-trash" />
                                             </svg>
-                                            <span x-text="$store.i18n.t('action.removeCreator')"></span>
+                                            <span
+                                                x-text="$store.i18n.t('action.removeCreator')"></span>
                                         </button>
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('creator')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('creator')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addCreator')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addCreator')"></span>
                             </button>
                         </div>
                     </div>
@@ -729,46 +936,69 @@
                         <!-- Quick search: ROR (Organisation) -->
                         <div class="mb-6">
                             <div class="flex gap-x-2">
-                                <select x-model="publisherSearchType" class="input bg-slate-200 flex-1" @change="
+                                <select
+                                    x-model="publisherSearchType"
+                                    class="input bg-slate-200 flex-1"
+                                    @change="
                                         publisherSearch.rorSearchQuery = '';
                                         publisherSearch.rorResults = [];
                                         publisherSearch.rorDropdownOpen = false;
                                         publisherSearch.rorHasSearched = false;
                                         ">
-                                    <option value="" x-text="$store.i18n.t('field.searchType')"></option>
+                                    <option
+                                        value=""
+                                        x-text="$store.i18n.t('field.searchType')"></option>
                                     <option value="ROR">ROR</option>
                                 </select>
-                        
+
                                 <!-- ROR quick search -->
-                                <div x-show="publisherSearchType === 'ROR'" class="flex-2 relative">
+                                <div
+                                    x-show="publisherSearchType === 'ROR'"
+                                    class="flex-2 relative">
                                     <div class="flex gap-2">
-                                        <input x-model="publisherSearch.rorSearchQuery" @input="fetchResults(0, 0, 'publisher')"
-                                            @focus="publisherSearch.rorDropdownOpen = true" @click.away="publisherSearch.rorDropdownOpen = false"
-                                            :placeholder="$store.i18n.t('field.rorSearchPlaceholder')" class="input p-2 w-full bg-slate-200" />
-                        
-                                        <button type="button" x-show="publisherIdentifier != ''"
-                                            @click="clearROR(0, 0, 'publisher');" class="btn p-2">
-                                            <svg class="size-4 shrink-0" aria-hidden="true">
+                                        <input
+                                            x-model="publisherSearch.rorSearchQuery"
+                                            @input="fetchResults(0, 0, 'publisher')"
+                                            @focus="publisherSearch.rorDropdownOpen = true"
+                                            @click.away="publisherSearch.rorDropdownOpen = false"
+                                            :placeholder="$store.i18n.t('field.rorSearchPlaceholder')"
+                                            class="input p-2 w-full bg-slate-200" />
+
+                                        <button
+                                            type="button"
+                                            x-show="publisherIdentifier != ''"
+                                            @click="clearROR(0, 0, 'publisher');"
+                                            class="btn p-2">
+                                            <svg
+                                                class="size-4 shrink-0"
+                                                aria-hidden="true">
                                                 <use href="#hi-x-mark" />
                                             </svg>
                                         </button>
                                     </div>
-                        
-                                    <ul x-show="publisherSearch.rorDropdownOpen && publisherSearch.rorResults.length > 0" x-transition
+
+                                    <ul
+                                        x-show="publisherSearch.rorDropdownOpen && publisherSearch.rorResults.length > 0"
+                                        x-transition
                                         class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
-                                        <template x-for="item in publisherSearch.rorResults" :key="item.id">
-                                            <li @click="selectROR(item, 0, 0, 'publisher');"
+                                        <template
+                                            x-for="item in publisherSearch.rorResults"
+                                            :key="item.id">
+                                            <li
+                                                @click="selectROR(item, 0, 0, 'publisher');"
                                                 class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
                                                 x-text="`${item.name}${item.location ? ' | ' + item.location : ''}`"></li>
                                         </template>
                                     </ul>
                                 </div>
                             </div>
-                        
+
                             <!-- Status messages for the quick search -->
                             <div class="mt-1 space-y-1">
-                                <p x-show="publisherSearchType === 'ROR' && publisherSearch.rorDropdownOpen && publisherSearch.rorHasSearched && publisherSearch.rorResults.length === 0"
-                                    class="error text-sm mt-1 px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                <p
+                                    x-show="publisherSearchType === 'ROR' && publisherSearch.rorDropdownOpen && publisherSearch.rorHasSearched && publisherSearch.rorResults.length === 0"
+                                    class="error text-sm mt-1 px-1"
+                                    x-text="$store.i18n.t('status.noMatchesFound')"></p>
                             </div>
                         </div>
 
@@ -817,32 +1047,50 @@
                             class="label px-1"
                             x-text="$store.i18n.t('section.publisherIdentifier')"></label>
 
-                        <div class="mb-2">   
+                        <div class="mb-2">
                             <div class="flex gap-x-2">
-                                <select x-model="publisherIdentifierScheme" class="input flex-1" @change="
+                                <select
+                                    x-model="publisherIdentifierScheme"
+                                    class="input flex-1"
+                                    @change="
                                     const scheme = publisherIdentifierSchema.find(s => s.value === publisherIdentifierScheme);
                                     publisherIdentifierSchemeURI = scheme ? scheme.uri : '';
                                     validatePublisherIdentifierFields();
                                     regenerateAll();">
-                                    <option value="" x-text="$store.i18n.t('field.publisherIdentifierScheme')"></option>
-                                    <template x-for="option in publisherIdentifierSchema" :key="option.value">
-                                        <option :value="option.value" x-text="option.label"></option>
+                                    <option
+                                        value=""
+                                        x-text="$store.i18n.t('field.publisherIdentifierScheme')"></option>
+                                    <template
+                                        x-for="option in publisherIdentifierSchema"
+                                        :key="option.value">
+                                        <option
+                                            :value="option.value"
+                                            x-text="option.label"></option>
                                     </template>
                                 </select>
-                    
-                                <input type="text" x-model="publisherIdentifier" class="input flex-1" :placeholder="$store.i18n.t('field.publisherIdentifier')"
-                                    @input="validatePublisherIdentifierFields()" @blur="validatePublisherIdentifierFields()"
+
+                                <input
+                                    type="text"
+                                    x-model="publisherIdentifier"
+                                    class="input flex-1"
+                                    :placeholder="$store.i18n.t('field.publisherIdentifier')"
+                                    @input="validatePublisherIdentifierFields()"
+                                    @blur="validatePublisherIdentifierFields()"
                                     @change="regenerateAll()" />
                             </div>
                             <div class="grid grid-cols-2">
                                 <template x-if="publisherIdentifierSchemeError">
-                                    <p class="error md:col-start-1 pl-1 md:pl-3" x-text="publisherIdentifierSchemeError"></p>
+                                    <p
+                                        class="error md:col-start-1 pl-1 md:pl-3"
+                                        x-text="publisherIdentifierSchemeError"></p>
                                 </template>
                                 <template x-if="publisherIdentifierError">
-                                    <p class="error md:col-start-2 pl-1 md:pl-3" x-text="publisherIdentifierError"></p>
+                                    <p
+                                        class="error md:col-start-2 pl-1 md:pl-3"
+                                        x-text="publisherIdentifierError"></p>
                                 </template>
                             </div>
-                        </div> 
+                        </div>
                     </div>
 
                     <hr class="my-4" />
@@ -909,7 +1157,6 @@
 
                 <!-- TAB: Recommended -->
                 <div x-show="tab === 'recommended'" x-cloak>
-                    
                     <!-- Descriptions -->
                     <div class="space-y-2">
                         <div class="flex justify-between">
@@ -984,7 +1231,9 @@
                                             x-text="block.descriptionTypeError"></p>
                                     </template>
 
-                                    <div class="flex justify-end" x-show="index > 0">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
                                         <button
                                             type="button"
                                             x-show="index > 0"
@@ -1001,11 +1250,15 @@
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('description')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('description')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addDescription')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addDescription')"></span>
                             </button>
                         </div>
                     </div>
@@ -1210,8 +1463,9 @@
                                         class="input"
                                         :placeholder="$store.i18n.t('field.dateInformation')" />
 
-
-                                    <div class="flex justify-end" x-show="index > 0">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
                                         <button
                                             type="button"
                                             x-show="index > 0"
@@ -1228,11 +1482,15 @@
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('date')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('date')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addDate')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addDate')"></span>
                             </button>
                         </div>
                     </div>
@@ -1257,11 +1515,13 @@
                                 x-for="(block, index) in contributorBlocks"
                                 :key="index">
                                 <div class="entity-card">
-                                    
                                     <!-- Quick search: ORCID (Person) or ROR (Organisation) -->
                                     <div class="mb-6">
                                         <div class="flex gap-x-2">
-                                            <select x-model="block.searchType" class="input bg-slate-200 flex-1" @change="
+                                            <select
+                                                x-model="block.searchType"
+                                                class="input bg-slate-200 flex-1"
+                                                @change="
                                                     block.nameIdentifiers[0].orcidSearchQuery = '';
                                                     block.nameIdentifiers[0].orcidResults = [];
                                                     block.nameIdentifiers[0].orcidDropdownOpen = false;
@@ -1271,100 +1531,146 @@
                                                     block.nameIdentifiers[0].rorDropdownOpen = false;
                                                     block.nameIdentifiers[0].rorHasSearched = false;
                                                 ">
-                                                <option value="" x-text="$store.i18n.t('field.searchType')"></option>
-                                                <option value="ORCID">ORCID</option>
+                                                <option
+                                                    value=""
+                                                    x-text="$store.i18n.t('field.searchType')"></option>
+                                                <option value="ORCID">
+                                                    ORCID
+                                                </option>
                                                 <option value="ROR">ROR</option>
                                             </select>
-                    
+
                                             <!-- ORCID quick search -->
-                                            <div x-show="block.searchType === 'ORCID'" class="flex-2 relative">
+                                            <div
+                                                x-show="block.searchType === 'ORCID'"
+                                                class="flex-2 relative">
                                                 <div class="flex gap-2">
-                                                    <input x-model="block.nameIdentifiers[0].orcidSearchQuery"
+                                                    <input
+                                                        x-model="block.nameIdentifiers[0].orcidSearchQuery"
                                                         @input.debounce.500ms="orcidSearch(index, 0, 'contributor')"
                                                         :placeholder="$store.i18n.t('field.orcidSearchPlaceholder')"
                                                         class="input p-2 w-full bg-slate-200" />
-                    
-                                                    <button type="button" x-show="block.nameIdentifiers[0].nameIdentifier != ''" @click="
+
+                                                    <button
+                                                        type="button"
+                                                        x-show="block.nameIdentifiers[0].nameIdentifier != ''"
+                                                        @click="
                                                             clearORCID(index, 0, 'contributor');
                                                             block.nameType = '';
-                                                        " class="btn p-2">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-x-mark" />
+                                                        "
+                                                        class="btn p-2">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-x-mark" />
                                                         </svg>
                                                     </button>
                                                 </div>
-                    
-                                                <ul x-show="block.nameIdentifiers[0].orcidDropdownOpen" x-transition
+
+                                                <ul
+                                                    x-show="block.nameIdentifiers[0].orcidDropdownOpen"
+                                                    x-transition
                                                     class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
                                                     <!-- Loading -->
-                                                    <li x-show="block.nameIdentifiers[0].orcidLoading"
+                                                    <li
+                                                        x-show="block.nameIdentifiers[0].orcidLoading"
                                                         class="px-3 py-2 flex items-center gap-2 text-gray-500">
-                                                        <span x-text="$store.i18n.t('status.loading')"></span>
+                                                        <span
+                                                            x-text="$store.i18n.t('status.loading')"></span>
                                                     </li>
-                    
-                                                    <template x-for="item in block.nameIdentifiers[0].orcidResults" :key="item.id">
-                                                        <li @click="
+
+                                                    <template
+                                                        x-for="item in block.nameIdentifiers[0].orcidResults"
+                                                        :key="item.id">
+                                                        <li
+                                                            @click="
                                                                 selectORCID(item, index, 0, 'contributor');
                                                                 block.nameType = 'Personal';
                                                             "
                                                             x-show="!block.nameIdentifiers[0].orcidLoading && block.nameIdentifiers[0].orcidHasSearched"
                                                             class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md">
                                                             <div
-                                                                x-text="`${item.firstName + ' ' + item.familyName}${item.institution ? ' | ' + item.institution : ''}`">
-                                                            </div>
-                                                            <div class="flex items-center gap-2">
-                                                                <img src="/media/ORCID-iD_icon_16x16.png" alt="ORCID Icon"
+                                                                x-text="`${item.firstName + ' ' + item.familyName}${item.institution ? ' | ' + item.institution : ''}`"></div>
+                                                            <div
+                                                                class="flex items-center gap-2">
+                                                                <img
+                                                                    src="/media/ORCID-iD_icon_16x16.png"
+                                                                    alt="ORCID Icon"
                                                                     class="w-4 h-4 shrink-0" />
-                                                                <div class="text-gray-500" x-text="item.id"></div>
+                                                                <div
+                                                                    class="text-gray-500"
+                                                                    x-text="item.id"></div>
                                                             </div>
                                                         </li>
                                                     </template>
                                                 </ul>
                                             </div>
-                    
+
                                             <!-- ROR quick search -->
-                                            <div x-show="block.searchType === 'ROR'" class="flex-2 relative">
+                                            <div
+                                                x-show="block.searchType === 'ROR'"
+                                                class="flex-2 relative">
                                                 <div class="flex gap-2">
-                                                    <input x-model="block.nameIdentifiers[0].rorSearchQuery"
+                                                    <input
+                                                        x-model="block.nameIdentifiers[0].rorSearchQuery"
                                                         @input="fetchResults(index, 0, 'contributorNameId')"
                                                         @focus="block.nameIdentifiers[0].rorDropdownOpen = true"
                                                         @click.away="block.nameIdentifiers[0].rorDropdownOpen = false"
                                                         :placeholder="$store.i18n.t('field.rorSearchPlaceholder')"
                                                         class="input p-2 w-full bg-slate-200" />
-                    
-                                                    <button type="button" x-show="block.nameIdentifiers[0].nameIdentifier != ''" @click="
+
+                                                    <button
+                                                        type="button"
+                                                        x-show="block.nameIdentifiers[0].nameIdentifier != ''"
+                                                        @click="
                                                             clearROR(index, 0, 'contributorNameId');
                                                             block.nameType = '';
-                                                        " class="btn p-2">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-x-mark" />
+                                                        "
+                                                        class="btn p-2">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-x-mark" />
                                                         </svg>
                                                     </button>
                                                 </div>
-                    
-                                                <ul x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorResults.length > 0"
+
+                                                <ul
+                                                    x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorResults.length > 0"
                                                     x-transition
                                                     class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
-                                                    <template x-for="item in block.nameIdentifiers[0].rorResults" :key="item.id">
-                                                        <li @click="
+                                                    <template
+                                                        x-for="item in block.nameIdentifiers[0].rorResults"
+                                                        :key="item.id">
+                                                        <li
+                                                            @click="
                                                                 selectROR(item, index, 0, 'contributorNameId');
                                                                 block.nameType = 'Organizational';
-                                                            " class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
+                                                            "
+                                                            class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
                                                             x-text="`${item.name}${item.location ? ' | ' + item.location : ''}`"></li>
                                                     </template>
-                                                </ul> 
+                                                </ul>
                                             </div>
                                         </div>
-                    
+
                                         <!-- Status messages for the quick search -->
                                         <div class="mt-1 space-y-1">
-                                            <p x-show="block.searchType === 'ORCID' && !block.nameIdentifiers[0].orcidLoading && block.nameIdentifiers[0].orcidHasSearched && block.nameIdentifiers[0].orcidResults.length === 0"
-                                                class="error text-sm px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
-                                            <p x-show="block.nameIdentifiers[0].importState" class="text-sm px-1"
+                                            <p
+                                                x-show="block.searchType === 'ORCID' && !block.nameIdentifiers[0].orcidLoading && block.nameIdentifiers[0].orcidHasSearched && block.nameIdentifiers[0].orcidResults.length === 0"
+                                                class="error text-sm px-1"
+                                                x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                            <p
+                                                x-show="block.nameIdentifiers[0].importState"
+                                                class="text-sm px-1"
                                                 :class="{ 'text-green-700': block.nameIdentifiers[0].importStateType === 'success', 'text-red-600': block.nameIdentifiers[0].importStateType === 'error' }"
                                                 x-text="block.nameIdentifiers[0].importState"></p>
-                                            <p x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorHasSearched && block.nameIdentifiers[0].rorResults.length === 0"
-                                                    class="error text-sm mt-1 px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                            <p
+                                                x-show="block.nameIdentifiers[0].rorDropdownOpen && block.nameIdentifiers[0].rorHasSearched && block.nameIdentifiers[0].rorResults.length === 0"
+                                                class="error text-sm mt-1 px-1"
+                                                x-text="$store.i18n.t('status.noMatchesFound')"></p>
                                         </div>
                                     </div>
 
@@ -1487,7 +1793,9 @@
                                         x-for="(id, i) in block.nameIdentifiers"
                                         :key="i">
                                         <div class="mb-3">
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
                                             <div>
                                                 <div class="flex gap-2">
                                                     <select
@@ -1524,7 +1832,8 @@
                                                 </template>
                                             </div>
 
-                                            <div class="flex gap-x-2 justify-end">
+                                            <div
+                                                class="flex gap-x-2 justify-end">
                                                 <button
                                                     type="button"
                                                     x-show="i === block.nameIdentifiers.length - 1"
@@ -1562,126 +1871,192 @@
                                         class="label px-1"
                                         x-text="$store.i18n.t('section.affiliations')"></label>
 
-                                    
                                     <template
                                         x-for="(aff, i) in block.affiliations"
                                         :key="i">
-
                                         <div>
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
-                                        
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
+
                                             <!-- Quick search: ROR (Organisation) -->
                                             <div class="mb-6">
                                                 <div class="flex gap-x-2">
-                                                    <select x-model="aff.searchType" class="input bg-slate-200 flex-1" @change="
+                                                    <select
+                                                        x-model="aff.searchType"
+                                                        class="input bg-slate-200 flex-1"
+                                                        @change="
                                                             aff.rorSearchQuery = '';
                                                             aff.rorResults = [];
                                                             aff.rorDropdownOpen = false;
                                                             aff.rorHasSearched = false;
                                                             ">
-                                                        <option value="" x-text="$store.i18n.t('field.searchType')"></option>
-                                                        <option value="ROR">ROR</option>
+                                                        <option
+                                                            value=""
+                                                            x-text="$store.i18n.t('field.searchType')"></option>
+                                                        <option value="ROR">
+                                                            ROR
+                                                        </option>
                                                     </select>
-                                        
+
                                                     <!-- ROR quick search -->
-                                                    <div x-show="aff.searchType === 'ROR'" class="flex-2 relative">
+                                                    <div
+                                                        x-show="aff.searchType === 'ROR'"
+                                                        class="flex-2 relative">
                                                         <div class="flex gap-2">
-                                                            <input x-model="aff.rorSearchQuery" @input="fetchResults(index, i, 'contributorAffiliation')"
-                                                                @focus="aff.rorDropdownOpen = true" @click.away="aff.rorDropdownOpen = false"
+                                                            <input
+                                                                x-model="aff.rorSearchQuery"
+                                                                @input="fetchResults(index, i, 'contributorAffiliation')"
+                                                                @focus="aff.rorDropdownOpen = true"
+                                                                @click.away="aff.rorDropdownOpen = false"
                                                                 :placeholder="$store.i18n.t('field.rorSearchPlaceholder')"
                                                                 class="input p-2 w-full bg-slate-200" />
-                                        
-                                                            <button type="button" x-show="aff.affiliationIdentifier != ''" 
+
+                                                            <button
+                                                                type="button"
+                                                                x-show="aff.affiliationIdentifier != ''"
                                                                 @click="clearROR(index, i, 'contributorAffiliation');"
                                                                 class="btn p-2">
-                                                                <svg class="size-4 shrink-0" aria-hidden="true">
-                                                                    <use href="#hi-x-mark" />
+                                                                <svg
+                                                                    class="size-4 shrink-0"
+                                                                    aria-hidden="true">
+                                                                    <use
+                                                                        href="#hi-x-mark" />
                                                                 </svg>
                                                             </button>
                                                         </div>
-                                        
-                                                        <ul x-show="aff.rorDropdownOpen && aff.rorResults.length > 0" x-transition
+
+                                                        <ul
+                                                            x-show="aff.rorDropdownOpen && aff.rorResults.length > 0"
+                                                            x-transition
                                                             class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
-                                                            <template x-for="item in aff.rorResults" :key="item.id">
-                                                                <li @click="selectROR(item, index, i, 'contributorAffiliation');"
+                                                            <template
+                                                                x-for="item in aff.rorResults"
+                                                                :key="item.id">
+                                                                <li
+                                                                    @click="selectROR(item, index, i, 'contributorAffiliation');"
                                                                     class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
                                                                     x-text="`${item.name}${item.location ? ' | ' + item.location : ''}`"></li>
                                                             </template>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                        
+
                                                 <!-- Status messages for the quick search -->
                                                 <div class="mt-1 space-y-1">
-                                                    <p x-show="aff.searchType === 'ROR' && aff.rorDropdownOpen && aff.rorHasSearched && aff.rorResults.length === 0"
-                                                        class="error text-sm mt-1 px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                                    <p
+                                                        x-show="aff.searchType === 'ROR' && aff.rorDropdownOpen && aff.rorHasSearched && aff.rorResults.length === 0"
+                                                        class="error text-sm mt-1 px-1"
+                                                        x-text="$store.i18n.t('status.noMatchesFound')"></p>
                                                 </div>
                                             </div>
-                                        
+
                                             <div>
                                                 <div class="flex gap-x-2 mb-3">
-                                                    <input type="text" x-model="aff.contributorAffiliation" class="input p-2"
+                                                    <input
+                                                        type="text"
+                                                        x-model="aff.contributorAffiliation"
+                                                        class="input p-2"
                                                         :placeholder="$store.i18n.t('field.contributorAffiliation')" />
                                                 </div>
 
-
                                                 <div class="mb-3">
                                                     <div class="flex gap-x-2">
-                                                        <select x-model="aff.affiliationIdentifierScheme"
+                                                        <select
+                                                            x-model="aff.affiliationIdentifierScheme"
                                                             @change="aff.affiliationIdentifierSchemeURI = affiliationIdentifierSchemes.find(o => o.value === aff.affiliationIdentifierScheme)?.uri || ''"
                                                             class="border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-1/2 px-2 py-1">
-                                                            <option value="" x-text="$store.i18n.t('field.affiliationIdentifierScheme')"></option>
-                                                            <template x-for="scheme in affiliationIdentifierSchemes" :key="scheme.value">
-                                                                <option :value="scheme.value" :selected="scheme.value === aff.affiliationIdentifierScheme"
+                                                            <option
+                                                                value=""
+                                                                x-text="$store.i18n.t('field.affiliationIdentifierScheme')"></option>
+                                                            <template
+                                                                x-for="scheme in affiliationIdentifierSchemes"
+                                                                :key="scheme.value">
+                                                                <option
+                                                                    :value="scheme.value"
+                                                                    :selected="scheme.value === aff.affiliationIdentifierScheme"
                                                                     x-text="scheme.label"></option>
                                                             </template>
                                                         </select>
 
-                                                        <input type="text" x-model="aff.affiliationIdentifier" class="input"
+                                                        <input
+                                                            type="text"
+                                                            x-model="aff.affiliationIdentifier"
+                                                            class="input"
                                                             :placeholder="$store.i18n.t('field.affiliationIdentifier')" />
                                                     </div>
 
-                                                    <template x-if="aff.affiliationIdentifierSchemeError">
-                                                        <p class="error" x-text="aff.affiliationIdentifierSchemeError"></p>
+                                                    <template
+                                                        x-if="aff.affiliationIdentifierSchemeError">
+                                                        <p
+                                                            class="error"
+                                                            x-text="aff.affiliationIdentifierSchemeError"></p>
                                                     </template>
                                                 </div>
-                                        
-                                                <div class="flex gap-x-2 justify-end">
-                                                    <button type="button" x-show="i === block.affiliations.length - 1"
-                                                        @click="addNestedBlock(index, 'contributorAffiliation')" class="btn px-3 py-1 mr-auto mb-3">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-plus" />
+
+                                                <div
+                                                    class="flex gap-x-2 justify-end">
+                                                    <button
+                                                        type="button"
+                                                        x-show="i === block.affiliations.length - 1"
+                                                        @click="addNestedBlock(index, 'contributorAffiliation')"
+                                                        class="btn px-3 py-1 mr-auto mb-3">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-plus" />
                                                         </svg>
-                                                        <span x-text="$store.i18n.t('action.addAffiliation')"></span>
+                                                        <span
+                                                            x-text="$store.i18n.t('action.addAffiliation')"></span>
                                                     </button>
-                                                    <button type="button" x-show="i > 0" @click="removeNestedBlock(index, i, 'contributorAffiliation')"
+                                                    <button
+                                                        type="button"
+                                                        x-show="i > 0"
+                                                        @click="removeNestedBlock(index, i, 'contributorAffiliation')"
                                                         class="btn btn-remove p-2 ml-2 mb-3">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-trash" />
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-trash" />
                                                         </svg>
-                                                        <span x-text="$store.i18n.t('action.removeAffiliation')"></span>
+                                                        <span
+                                                            x-text="$store.i18n.t('action.removeAffiliation')"></span>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </template>
 
-                                    <div class="flex justify-end" x-show="index > 0">
-                                        <button type="button" x-show="index > 0" @click="removeBlock(index, 'contributor')" class="btn btn-remove px-3 py-1">
-                                            <svg class="size-4 shrink-0" aria-hidden="true">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
+                                        <button
+                                            type="button"
+                                            x-show="index > 0"
+                                            @click="removeBlock(index, 'contributor')"
+                                            class="btn btn-remove px-3 py-1">
+                                            <svg
+                                                class="size-4 shrink-0"
+                                                aria-hidden="true">
                                                 <use href="#hi-trash" />
                                             </svg>
-                                            <span x-text="$store.i18n.t('action.removeContributor')"></span>
+                                            <span
+                                                x-text="$store.i18n.t('action.removeContributor')"></span>
                                         </button>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('contributor')"
+                            <button
+                                type="button"
+                                @click="addBlock('contributor')"
                                 class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addContributor')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addContributor')"></span>
                             </button>
                         </div>
                     </div>
@@ -1801,7 +2176,7 @@
 
                                     <select
                                         x-model="block.resourceTypeGeneral"
-                                        class="input flex-1">
+                                        class="input flex-1 mb-3">
                                         <option
                                             value=""
                                             x-text="$store.i18n.t('field.resourceTypeGeneral')"></option>
@@ -1815,22 +2190,41 @@
                                         </template>
                                     </select>
 
-                                    <div class="flex justify-end" x-show="index > 0">
-                                        <button type="button" @click="removeBlock(index, 'relatedIdentifier')"
+                                    <div>
+                                        <input
+                                            type="text"
+                                            x-model="block.relationTypeInformation"
+                                            class="input"
+                                            :placeholder="$store.i18n.t('field.relationTypeInformation')"/>
+                                    </div>
+
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
+                                        <button
+                                            type="button"
+                                            @click="removeBlock(index, 'relatedIdentifier')"
                                             class="btn btn-remove p-2 mt-4 ml-auto block">
-                                            <svg class="size-4 shrink-0" aria-hidden="true">
+                                            <svg
+                                                class="size-4 shrink-0"
+                                                aria-hidden="true">
                                                 <use href="#hi-trash" />
                                             </svg>
-                                            <span x-text="$store.i18n.t('action.removeRelatedIdentifier')"></span>
+                                            <span
+                                                x-text="$store.i18n.t('action.removeRelatedIdentifier')"></span>
                                         </button>
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('relatedIdentifier')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('relatedIdentifier')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addRelatedIdentifier')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addRelatedIdentifier')"></span>
                             </button>
                         </div>
                     </div>
@@ -1855,7 +2249,6 @@
                                 x-for="(block, index) in geoLocationBlocks"
                                 :key="index">
                                 <div class="entity-card">
-
                                     <!-- Geo Location Place-->
                                     <label
                                         class="label px-1"
@@ -1946,7 +2339,9 @@
                                         x-for="(poly, i) in block.geoLocationPolygon"
                                         :key="i">
                                         <div class="mb-3">
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
                                             <label
                                                 class="label text-sm px-1"
                                                 x-text="$store.i18n.t('field.polygonPoints')"></label>
@@ -2024,7 +2419,8 @@
                                                     :placeholder="$store.i18n.t('field.pointLatitude')" />
                                             </div>
 
-                                            <div class="flex gap-x-2 justify-end">
+                                            <div
+                                                class="flex gap-x-2 justify-end">
                                                 <button
                                                     type="button"
                                                     x-show="i === block.geoLocationPolygon.length - 1"
@@ -2056,7 +2452,7 @@
                                     </template>
 
                                     <template x-if="block.geoErrors?.length">
-                                        <div class="my-3"> 
+                                        <div class="my-3">
                                             <ul
                                                 class="error list-disc list-outside ml-5 space-y-1">
                                                 <template
@@ -2068,21 +2464,33 @@
                                         </div>
                                     </template>
 
-                                    <div class="flex justify-end" x-show="index > 0">
-                                        <button type="button" @click="removeBlock(index, 'geoLocation')" class="btn btn-remove p-2 mt-4 ml-auto block">
-                                            <svg class="size-4 shrink-0" aria-hidden="true">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
+                                        <button
+                                            type="button"
+                                            @click="removeBlock(index, 'geoLocation')"
+                                            class="btn btn-remove p-2 mt-4 ml-auto block">
+                                            <svg
+                                                class="size-4 shrink-0"
+                                                aria-hidden="true">
                                                 <use href="#hi-trash" />
                                             </svg>
-                                            <span x-text="$store.i18n.t('action.removeGeoLocation')"></span>
+                                            <span
+                                                x-text="$store.i18n.t('action.removeGeoLocation')"></span>
                                         </button>
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('geoLocation')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('geoLocation')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addGeoLocation')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addGeoLocation')"></span>
                             </button>
                         </div>
                     </div>
@@ -2219,7 +2627,9 @@
                                             :placeholder="$store.i18n.t('field.schemeURI')" />
                                     </div>
 
-                                    <div class="flex justify-end" x-show="index > 0">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
                                         <button
                                             type="button"
                                             @click="removeBlock(index, 'right')"
@@ -2235,11 +2645,15 @@
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('right')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('right')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addRight')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addRight')"></span>
                             </button>
                         </div>
                     </div>
@@ -2503,50 +2917,73 @@
                                 x-for="(block, index) in fundingReferenceBlocks"
                                 :key="index">
                                 <div class="entity-card">
-                                    
                                     <!-- Quick search: ROR (Organisation) -->
                                     <div class="mb-6">
                                         <div class="flex gap-x-2">
-                                            <select x-model="block.searchType" class="input bg-slate-200 flex-1" @change="
+                                            <select
+                                                x-model="block.searchType"
+                                                class="input bg-slate-200 flex-1"
+                                                @change="
                                                     block.rorSearchQuery = '';
                                                     block.rorResults = [];
                                                     block.rorDropdownOpen = false;
                                                     block.rorHasSearched = false;
                                                     ">
-                                                <option value="" x-text="$store.i18n.t('field.searchType')"></option>
+                                                <option
+                                                    value=""
+                                                    x-text="$store.i18n.t('field.searchType')"></option>
                                                 <option value="ROR">ROR</option>
                                             </select>
-                                    
+
                                             <!-- ROR quick search -->
-                                            <div x-show="block.searchType === 'ROR'" class="flex-2 relative">
+                                            <div
+                                                x-show="block.searchType === 'ROR'"
+                                                class="flex-2 relative">
                                                 <div class="flex gap-2">
-                                                    <input x-model="block.rorSearchQuery" @input="fetchResults(index, 0, 'funder')"
-                                                        @focus="block.rorDropdownOpen = true" @click.away="block.rorDropdownOpen = false"
-                                                        :placeholder="$store.i18n.t('field.rorSearchPlaceholder')" class="input p-2 w-full bg-slate-200" />
-                                    
-                                                    <button type="button" x-show="block.funderIdentifier != ''"
-                                                        @click="clearROR(index, 0, 'funder');" class="btn p-2">
-                                                        <svg class="size-4 shrink-0" aria-hidden="true">
-                                                            <use href="#hi-x-mark" />
+                                                    <input
+                                                        x-model="block.rorSearchQuery"
+                                                        @input="fetchResults(index, 0, 'funder')"
+                                                        @focus="block.rorDropdownOpen = true"
+                                                        @click.away="block.rorDropdownOpen = false"
+                                                        :placeholder="$store.i18n.t('field.rorSearchPlaceholder')"
+                                                        class="input p-2 w-full bg-slate-200" />
+
+                                                    <button
+                                                        type="button"
+                                                        x-show="block.funderIdentifier != ''"
+                                                        @click="clearROR(index, 0, 'funder');"
+                                                        class="btn p-2">
+                                                        <svg
+                                                            class="size-4 shrink-0"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                href="#hi-x-mark" />
                                                         </svg>
                                                     </button>
                                                 </div>
-                                    
-                                                <ul x-show="block.rorDropdownOpen && block.rorResults.length > 0" x-transition
+
+                                                <ul
+                                                    x-show="block.rorDropdownOpen && block.rorResults.length > 0"
+                                                    x-transition
                                                     class="absolute left-0 right-0 top-full z-50 bg-white border rounded-md mt-1 shadow max-h-60 overflow-y-auto">
-                                                    <template x-for="item in block.rorResults" :key="item.id">
-                                                        <li @click="selectROR(item, index, 0, 'funder');"
+                                                    <template
+                                                        x-for="item in block.rorResults"
+                                                        :key="item.id">
+                                                        <li
+                                                            @click="selectROR(item, index, 0, 'funder');"
                                                             class="px-3 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
                                                             x-text="`${item.name}${item.location ? ' | ' + item.location : ''}`"></li>
                                                     </template>
                                                 </ul>
                                             </div>
                                         </div>
-                                    
+
                                         <!-- Status messages for the quick search -->
                                         <div class="mt-1 space-y-1">
-                                            <p x-show="block.searchType === 'ROR' && block.rorDropdownOpen && block.rorHasSearched && block.rorResults.length === 0"
-                                                class="error text-sm mt-1 px-1" x-text="$store.i18n.t('status.noMatchesFound')"></p>
+                                            <p
+                                                x-show="block.searchType === 'ROR' && block.rorDropdownOpen && block.rorHasSearched && block.rorResults.length === 0"
+                                                class="error text-sm mt-1 px-1"
+                                                x-text="$store.i18n.t('status.noMatchesFound')"></p>
                                         </div>
                                     </div>
 
@@ -2624,7 +3061,9 @@
                                             :placeholder="$store.i18n.t('field.awardNumber')" />
                                     </div>
 
-                                    <div class="flex justify-end" x-show="index > 0">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
                                         <button
                                             type="button"
                                             @click="removeBlock(index, 'funding')"
@@ -2640,11 +3079,15 @@
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('funding')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('funding')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addFundingReference')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addFundingReference')"></span>
                             </button>
                         </div>
                     </div>
@@ -2669,7 +3112,6 @@
                                 x-for="(block, index) in relatedItemsBlock"
                                 :key="index">
                                 <div class="entity-card">
-                                    
                                     <!-- Search -->
                                     <div class="flex gap-x-2">
                                         <input
@@ -2757,6 +3199,12 @@
                                         </template>
                                     </div>
 
+                                    <input
+                                        type="text"
+                                        x-model="block.relationTypeInformation"
+                                        class="input mb-3"
+                                        :placeholder="$store.i18n.t('field.relationTypeInformation')" />
+
                                     <div class="mb-3">
                                         <div class="flex gap-x-2">
                                             <select
@@ -2838,8 +3286,10 @@
                                     <template
                                         x-for="(id, i) in block.creators"
                                         :key="i">
-                                        <div class="mb-3"> 
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                        <div class="mb-3">
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
                                             <div class="flex gap-x-2 mb-3">
                                                 <select
                                                     x-model="id.nameType"
@@ -2899,7 +3349,8 @@
                                                 </select>
                                             </div>
 
-                                            <div class="flex gap-x-2 justify-end">
+                                            <div
+                                                class="flex gap-x-2 justify-end">
                                                 <button
                                                     type="button"
                                                     x-show="i === block.creators.length - 1"
@@ -2940,7 +3391,9 @@
                                         x-for="(id, i) in block.titles"
                                         :key="i">
                                         <div class="mb-3">
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
                                             <input
                                                 type="text"
                                                 x-model="id.title"
@@ -2981,7 +3434,8 @@
                                                 </select>
                                             </div>
 
-                                            <div class="flex gap-x-2 justify-end">
+                                            <div
+                                                class="flex gap-x-2 justify-end">
                                                 <button
                                                     type="button"
                                                     x-show="i === block.titles.length - 1"
@@ -3113,7 +3567,9 @@
                                         x-for="(id, i) in block.contributors"
                                         :key="i">
                                         <div class="mb-3">
-                                            <hr x-show="i > 0" class="mb-3 !border-gray-200" />
+                                            <hr
+                                                x-show="i > 0"
+                                                class="mb-3 border-gray-200!" />
                                             <div class="flex gap-x-2 mb-3">
                                                 <select
                                                     x-model="id.contributorType"
@@ -3190,7 +3646,8 @@
                                                 </select>
                                             </div>
 
-                                            <div class="flex gap-x-2 justify-end">
+                                            <div
+                                                class="flex gap-x-2 justify-end">
                                                 <button
                                                     type="button"
                                                     x-show="i === block.contributors.length - 1"
@@ -3221,7 +3678,9 @@
                                         </div>
                                     </template>
 
-                                    <div class="flex justify-end" x-show="index > 0">
+                                    <div
+                                        class="flex justify-end"
+                                        x-show="index > 0">
                                         <button
                                             type="button"
                                             @click="removeBlock(index, 'relatedItem')"
@@ -3237,11 +3696,15 @@
                                     </div>
                                 </div>
                             </template>
-                            <button type="button" @click="addBlock('relatedItem')" class="btn px-3 py-1">
+                            <button
+                                type="button"
+                                @click="addBlock('relatedItem')"
+                                class="btn px-3 py-1">
                                 <svg class="size-4 shrink-0" aria-hidden="true">
                                     <use href="#hi-plus" />
                                 </svg>
-                                <span x-text="$store.i18n.t('action.addRelatedItem')"></span>
+                                <span
+                                    x-text="$store.i18n.t('action.addRelatedItem')"></span>
                             </button>
                         </div>
                     </div>
@@ -3307,17 +3770,17 @@
                             x-text="xmlStatus"></p>
 
                         <p
-                            x-show="importValidationSummary"
+                            x-show="getImportValidationSummary()"
                             class="text-sm mt-1 px-1"
                             :class="{ 'text-green-700': importValidationLevel === 'success', 'text-amber-700': importValidationLevel === 'warning', 'text-red-600': importValidationLevel === 'error' }"
-                            x-text="importValidationSummary"></p>
+                            x-text="getImportValidationSummary()"></p>
 
                         <div
                             x-show="importValidationLevel === 'warning' && importMissingMandatoryFields.length"
                             class="flex flex-wrap gap-2 mt-2 px-1">
                             <template
                                 x-for="field in importMissingMandatoryFields"
-                                :key="field.key">
+                                :key="field.key + (field.labelKey || field.label || '')">
                                 <button
                                     type="button"
                                     class="btn px-2 py-0.5"
@@ -3328,7 +3791,7 @@
                                         <use href="#hi-arrow-right" />
                                     </svg>
                                     <span
-                                        x-text="$store.i18n.t('action.goTo') + ' ' + field.label"></span>
+                                        x-text="$store.i18n.t('action.goTo') + ' ' + getMandatoryFieldLabel(field)"></span>
                                 </button>
                             </template>
                         </div>
@@ -3353,16 +3816,13 @@
 
                 <div
                     class="mt-6 pt-4 border-t-3 border-slate-900 flex flex-wrap gap-2 justify-between">
-                    <button
-                        type="button"
-                        class="btn"
-                        @click="scrollToTop()">
+                    <button type="button" class="btn" @click="scrollToTop()">
                         <svg class="size-4 shrink-0" aria-hidden="true">
                             <use href="#hi-chevron-double-up" />
                         </svg>
                         <span x-text="$store.i18n.t('action.backToTop')"></span>
                     </button>
-                    
+
                     <button type="button" class="btn" @click="goToNextTab()">
                         <svg class="size-4 shrink-0" aria-hidden="true">
                             <use href="#hi-chevron-double-right" />
@@ -3410,18 +3870,18 @@
                 </div>
 
                 <!-- Validation summary highlights missing mandatory fields and offers jump links -->
-                <div x-show="mandatoryValidationSummary" class="mb-3">
+                <div x-show="getMandatoryValidationSummary()" class="mb-3">
                     <p
                         class="text-sm px-1"
                         :class="{ 'text-green-700': mandatoryValidationLevel === 'success', 'text-amber-700': mandatoryValidationLevel === 'warning', 'text-red-600': mandatoryValidationLevel === 'error' }"
-                        x-text="mandatoryValidationSummary"></p>
+                        x-text="getMandatoryValidationSummary()"></p>
 
                     <div
                         x-show="mandatoryValidationLevel === 'warning' && mandatoryMissingFields.length"
                         class="flex flex-wrap gap-2 mt-2 px-1">
                         <template
                             x-for="field in mandatoryMissingFields"
-                            :key="field.key + field.label">
+                            :key="field.key + (field.labelKey || field.label || '')">
                             <button
                                 type="button"
                                 class="btn px-2 py-0.5"
@@ -3430,7 +3890,7 @@
                                     <use href="#hi-arrow-right" />
                                 </svg>
                                 <span
-                                    x-text="$store.i18n.t('action.goTo') + ' ' + field.label"></span>
+                                    x-text="$store.i18n.t('action.goTo') + ' ' + getMandatoryFieldLabel(field)"></span>
                             </button>
                         </template>
                     </div>
@@ -3589,12 +4049,8 @@
                     <pre class="preview" x-text="yaml"></pre>
                 </div>
 
-                <div
-                    class="mt-6 flex flex-wrap gap-2 justify-between">
-                    <button
-                        type="button"
-                        class="btn"
-                        @click="scrollToTop()">
+                <div class="mt-6 flex flex-wrap gap-2 justify-between">
+                    <button type="button" class="btn" @click="scrollToTop()">
                         <svg class="size-4 shrink-0" aria-hidden="true">
                             <use href="#hi-chevron-double-up" />
                         </svg>
@@ -3643,8 +4099,7 @@
         </div>
 
         <!-- Footer with legal notice and project references -->
-        <footer
-            class="bg-white shadow rounded-2xl p-6 m-5">
+        <footer class="bg-white shadow rounded-2xl p-6 m-5">
             <a
                 :href="$store.i18n.lang === 'de' ? '/legal-notice-de.html' : '/legal-notice.html'"
                 target="_blank"
